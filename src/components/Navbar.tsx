@@ -119,14 +119,15 @@ export default function Navbar() {
               <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
                 <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-2xl font-bold"> يسِّرها</span>
                 <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
-              <motion.button
+             
+            </motion.div> 
+            <motion.button
               whileHover={{ scale: 1.1 }}
               onClick={() => setIsOpen(false)}
               className="p-2 text-white rounded-xl bg-white/10"
             >
               <X size={24} />
             </motion.button>
-            </motion.div>
           </div>
         </div>
 

@@ -58,7 +58,7 @@ export default function Error404() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-4xl text-center relative z-10"
+        className="w-full max-w-4xl text-center relative z-10 pt-24"
       >
         {/* Main Error Orb */}
         <motion.div 

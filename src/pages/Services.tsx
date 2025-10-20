@@ -179,8 +179,8 @@ export default function Services() {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            نحن <span className="text-emerald-400 font-bold">سحرة التكنولوجيا</span>، نصنع{' '}
-            <span className="text-cyan-400">حلولك</span> بـ <span className="text-purple-400">إبداع</span> لا حدود له
+            نحن <span className="text-emerald-400 font-bold"> صُنّاع الدهشة </span>، نزرع الإبداع {' '}
+            <span className="text-cyan-400">في قلب كل</span>  <span className="text-purple-400">حل رقمي</span> نقدمه
           </motion.p>
         </motion.div>
 

@@ -129,7 +129,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <StarField />
 
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5" />
@@ -450,7 +450,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              أحدث <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">الخدمات</span>
+              أحدث <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">الخدمات</span>
             </h2>
             <p className="text-xl text-gray-300">اكتشف أحدث ما نقدمه من حلول تقنية مبتكرة</p>
           </motion.div>
@@ -511,7 +511,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              أحدث <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">المشاريع</span>
+              أحدث <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">المشاريع</span>
             </h2>
             <p className="text-xl text-gray-300">تعرف على أحدث إنجازاتنا في عالم التقنية</p>
           </motion.div>

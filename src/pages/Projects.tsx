@@ -158,7 +158,7 @@ export default function Projects() {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            نحن <span className="text-emerald-400 font-bold">سحرة المشاريع</span>، نصنع{' '}
+            بعض <span className="text-emerald-400 font-bold"> مشاريعنا الناجحة </span>، نصنع{' '}
             <span className="text-cyan-400">نجاحك</span> بـ <span className="text-purple-400">إبداع</span> لا حدود له
           </motion.p>
         </motion.div>

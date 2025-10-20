@@ -115,8 +115,8 @@ export default function Contact() {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            نحن <span className="text-emerald-400 font-bold">سحرة التواصل</span>،{' '}
-            <span className="text-cyan-400">نحول</span> <span className="text-purple-400">استفساراتك</span> إلى نجاح مذهل
+             <span className="text-emerald-400 font-bold"> تواصل معنا </span>، حتي {' '}
+            <span className="text-cyan-400">نحول</span> <span className="text-purple-400">مشروعك </span> إلى نجاح مذهل
           </motion.p>
         </motion.div>
 

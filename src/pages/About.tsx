@@ -139,7 +139,7 @@ export default function About() {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            نحن <span className="text-emerald-400 font-bold">سحرة التحول الرقمي</span>، نصنع{' '}
+            نحن نُعيد تعريف <span className="text-emerald-400 font-bold">الإبداع الرقمي </span>، لنصنع{' '}
             <span className="text-cyan-400">مستقبلك</span> بـ <span className="text-purple-400">إبداع</span> لا حدود له
           </motion.p>
         </motion.div>
