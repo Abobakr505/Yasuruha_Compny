@@ -76,7 +76,7 @@ export default function Navbar() {
                   {location.pathname === item.path && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute -bottom-3 left-1 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
+                      className="absolute -bottom-3 left-[1.5] transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
                       style={{ width: '100%' }}
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
@@ -119,7 +119,13 @@ export default function Navbar() {
               <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
                 <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-2xl font-bold"> يسِّرها</span>
                 <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
-              
+              <motion.button
+              whileHover={{ scale: 1.1 }}
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-white rounded-xl bg-white/10"
+            >
+              <X size={24} />
+            </motion.button>
             </motion.div>
           </div>
         </div>

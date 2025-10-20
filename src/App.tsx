@@ -10,6 +10,7 @@ import About from './pages/About';
 import ProjectDetail from './pages/ProjectDetail';
 import Login from './pages/Login';
 import AdminProjects from './pages/AdminProjects';
+import Error404 from './pages/Error404';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
         <Route path="/admin/projects" element={<AdminProjects />} />
+        <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />
       </div>
