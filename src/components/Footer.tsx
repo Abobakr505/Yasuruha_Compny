@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Code2, Mail, MapPin, Phone } from 'lucide-react';
+import { Code2, Facebook, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa6';
 
 export default function Footer() {
   return (
@@ -21,6 +22,43 @@ export default function Footer() {
             <p className="text-gray-400 leading-relaxed">
               شركة رائدة في مجال تطوير البرمجيات والحلول الرقمية المبتكرة
             </p>
+            <div className="flex space-x-4 space-x-reverse mt-4">
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                href="https://www.facebook.com/profile.php?id=61569823090886"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-r from-emerald-500 to-cyan-500 transition-colors"
+              >
+                <Facebook size={20} />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                href="https://www.tiktok.com/@yasuruha"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-r from-emerald-500 to-cyan-500 transition-colors"
+              >
+                <FaTiktok  size={20} />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                href="https://www.instagram.com/yasuruha1"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-r from-emerald-500 to-cyan-500 transition-colors"
+              >
+                <Instagram size={20} />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                href="https://www.youtube.com/@yasuruha"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-r from-emerald-500 to-cyan-500 transition-colors"
+              >
+                <Youtube  size={20} />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                href="tel:+201093954137"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-green-500 transition-colors"
+              >
+                <Phone  size={20} />
+              </motion.a>
+            </div>
           </motion.div>
 
           <motion.div

@@ -185,18 +185,6 @@ export default function Error404() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Footer */}
-        <motion.p 
-          variants={itemVariants}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="text-center mt-12 text-gray-500 text-sm"
-        >
-          © 2025 <span className="text-emerald-400 font-bold">يسِّرها</span> - 
-          حتى الفضاء ملكنا! 🌌✨
-        </motion.p>
       </motion.div>
     </div>
   );
