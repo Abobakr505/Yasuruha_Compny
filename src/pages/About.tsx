@@ -339,9 +339,9 @@ export default function About() {
             className="grid md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto"
           >
             {[
-              { icon: MapPin, text: 'الرياض، السعودية', color: '#10b981' },
-              { icon: Phone, text: '+966 50 123 4567', color: '#06b6d4' },
-              { icon: Mail, text: 'info@graphic-school.com', color: '#f59e0b' }
+              { icon: MapPin, text: 'سوهاج , مصر', color: '#10b981' },
+              { icon: Phone, text: '+201093954137', color: '#06b6d4' },
+              { icon: Mail, text: 'yasuruha1@gmail.com', color: '#f59e0b' }
             ].map((item, index) => (
               <motion.div
                 variants={itemVariants}

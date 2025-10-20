@@ -137,7 +137,8 @@ export default function Error404() {
         {/* Action Buttons */}
         <motion.div 
           variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+          s
         >
           <Link to="/">
             <motion.button
