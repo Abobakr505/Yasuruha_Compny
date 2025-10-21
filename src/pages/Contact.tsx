@@ -248,10 +248,12 @@ export default function Contact() {
                       disabled={isSubmitting}
                       className="group relative px-8 py-6 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-2xl font-bold text-xl shadow-2xl overflow-hidden disabled:opacity-50"
                     >
+
                       <span className="relative z-10 flex items-center gap-3">
                         {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
                         <ChevronRight className="group-hover:translate-x-2 transition-transform" />
                       </span>
+                      <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </motion.button>
                   </form>
                 </motion.div>

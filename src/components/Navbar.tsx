@@ -53,7 +53,7 @@ export default function Navbar() {
               </motion.div>
             </Link>
 
-            {/* DESKTOP NAV */}
+                        {/* DESKTOP NAV */}
             <div className="hidden md:flex items-center gap-12">
               {navItems.map((item, index) => (
                 <Link
@@ -76,8 +76,7 @@ export default function Navbar() {
                   {location.pathname === item.path && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute -bottom-3 left-[1.5] transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
-                      style={{ width: '100%' }}
+                      className="absolute -bottom-3 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                   )}

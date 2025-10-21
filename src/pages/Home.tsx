@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X  , Star} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
@@ -188,7 +188,7 @@ export default function Home() {
             >
               نصنع
               <motion.span
-                className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400"
+                className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient-x "
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                 }}
@@ -253,10 +253,10 @@ export default function Home() {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 1.2 + i * 0.1 }}
-                    className="text-2xl"
+                    className="text-xl"
                   >
-                    ⭐
-                  </motion.span>
+                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                 </motion.span>
                 ))}
               </div>
             </motion.div>
@@ -266,7 +266,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:block"
+            className=" lg:block"
           >
             <Terminal />
           </motion.div>
@@ -275,7 +275,7 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
         >
           <ChevronDown className="w-8 h-8 text-emerald-400" />
         </motion.div>
@@ -293,6 +293,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               من <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">نحن</span>
             </h2>
+            <div class="mx-auto w-16 h-1 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full mb-4"></div>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
               نحن فريق من المبدعين والمطورين الذين يسعون لتحويل الأفكار إلى واقع رقمي استثنائي. نؤمن بأن التكنولوجيا هي المفتاح للمستقبل.
             </p>

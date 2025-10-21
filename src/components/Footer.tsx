@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Code2, Facebook, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react';
 import { FaTiktok } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -68,11 +69,12 @@ export default function Footer() {
             transition={{ delay: 0.1 }}
           >
             <h3 className="text-xl font-bold mb-4 text-emerald-400">روابط سريعة</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-white transition-colors cursor-pointer">الخدمات</li>
-              <li className="hover:text-white transition-colors cursor-pointer">المشاريع</li>
-              <li className="hover:text-white transition-colors cursor-pointer">اتصل بنا</li>
-            </ul>
+            <div className="space-y-2 flex flex-col text-gray-400">
+              <Link to='/about' className="hover:text-white transition-colors cursor-pointer"> من نحن </Link >
+              <Link to='/services' className="hover:text-white transition-colors cursor-pointer">الخدمات</Link >
+              <Link to='/projects' className="hover:text-white transition-colors cursor-pointer">المشاريع</Link >
+              <Link to='contact' className="hover:text-white transition-colors cursor-pointer">اتصل بنا</Link >
+            </div>
           </motion.div>
 
           <motion.div
