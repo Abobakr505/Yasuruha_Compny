@@ -47,9 +47,9 @@ export default function Navbar() {
                 transition={{ duration: 0.6 }}
                 className="relative"
               >
-                <span className="bracket text-[2.5rem] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
+                <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
                 <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-2xl font-bold"> يسِّرها</span>
-                <span className="bracket text-[2.5rem] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
+                <span className="bracket text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
               </motion.div>
             </Link>
 
@@ -116,9 +116,9 @@ export default function Navbar() {
               animate={{ scale: 1 }}
               className="flex items-center gap-3"
             >
-              <span className="bracket text-[2rem] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
+              <span className="bracket  text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{"<"}</span>
                 <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-2xl font-bold"> يسِّرها</span>
-                <span className="bracket text-[2rem] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
+                <span className="bracket  text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 text-sm">{">"}</span>
              
             </motion.div> 
             <motion.button
