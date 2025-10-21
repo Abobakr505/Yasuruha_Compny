@@ -1,15 +1,23 @@
 import { motion } from 'framer-motion';
-import { 
-  ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, 
-  Building2, Sparkles, ChevronRight, Users, TrendingUp, Award, 
-  Download, Calendar, Clock, Eye, MessageSquare, Star 
-} from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Users, TrendingUp, Award, Download, Calendar, Clock, Eye, MessageSquare, Star } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import StarField from '../components/StarField';
+
+const iconMap = {
+  ShoppingCart,
+  Heart,
+  Building2,
+  Code,
+  Smartphone,
+  Globe
+};
 
 export default function ProjectDetail() {
   const { id } = useParams();
-  
+  const [project, setProject] = useState(null);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -27,40 +35,41 @@ export default function ProjectDetail() {
     }
   };
 
-  // Project Data (يمكن جلبها من API لاحقاً)
-  const project = {
-    id: '1',
-    title: 'منصة التجارة الإلكترونية',
-    category: 'متجر إلكتروني',
-    description: 'منصة تجارة إلكترونية متكاملة مع أنظمة دفع متعددة وإدارة متقدمة للمخزون. تم تطويرها باستخدام أحدث التقنيات لتوفير تجربة تسوق سلسة وآمنة.',
-    longDescription: 'منصة تجارة إلكترونية متكاملة تم تطويرها خصيصاً للعملاء في المملكة العربية السعودية. تشمل الميزات: سلة تسوق ذكية، توصيات AI، تتبع الشحنات، دفع إلكتروني آمن، ولوحة تحكم متقدمة للمديرين.',
-    image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    screenshots: [
-      'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-      'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800',
-      'https://images.pexels.com/photos/5905710/pexels-photo-5905710.jpeg?auto=compress&cs=tinysrgb&w=800',
-    ],
-    icon: ShoppingCart,
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe', 'AWS', 'Redux'],
-    stats: { 
-      users: '50K+', 
-      rating: '4.9', 
-      transactions: '100K+',
-      revenue: '2.5M+ ر.س'
-    },
-    color: '#10b981',
-    gradient: 'from-emerald-500 to-teal-500',
-    date: 'يناير 2024',
-    duration: '3 أشهر',
-    teamSize: '8 أعضاء',
-    client: 'شركة المجد التجارية',
-    liveUrl: 'https://ecommerce.yusraha.com',
-    caseStudyUrl: '/case-studies/ecommerce'
-  };
+  useEffect(() => {
+    const fetchProject = async () => {
+      const { data, error } = await supabase.from('projects').select('*').eq('id', id).single();
+      if (error) {
+        console.error('Error fetching project:', error);
+      } else {
+        setProject(data);
+      }
+    };
+    fetchProject();
+  }, [id]);
+
+  if (!project) {
+    return (
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] flex items-center justify-center"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="text-center flex flex-col items-center gap-2 text-white text-xl"
+        >
+          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          جاري التحميل...
+        </motion.div>
+      </motion.div>
+    );
+  }
+
+  const IconComponent = iconMap[project.icon_name] || Code;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] pt-32 pb-24 relative overflow-hidden">
-      {/* Animated Background */}
       <StarField />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.1),transparent_50%)]" />
@@ -79,7 +88,6 @@ export default function ProjectDetail() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* ======= HERO MAGIC ======= */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -115,7 +123,7 @@ export default function ProjectDetail() {
                 color: ['#ffffff', '#10b981', '#06b6d4']
               }}
               transition={{ duration: 6, repeat: Infinity }}
-              className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent"
+              className="GraphicSchool bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent"
             >
               {project.title}
             </motion.span>
@@ -129,10 +137,8 @@ export default function ProjectDetail() {
           </motion.p>
         </motion.div>
 
-        {/* ======= PROJECT HEADER ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Hero Image */}
             <motion.div variants={itemVariants} className="relative group">
               <div className={`rounded-3xl overflow-hidden border-2 border-white/20 ${project.gradient}`}>
                 <motion.img 
@@ -158,19 +164,17 @@ export default function ProjectDetail() {
               </div>
             </motion.div>
 
-            {/* Project Info */}
             <motion.div variants={itemVariants} className="space-y-6">
               <div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br opacity-10`}>
-                <project.icon className="w-12 h-12 text-white mb-4" />
+                <IconComponent className="w-12 h-12 text-white mb-4" />
                 <h3 className="text-2xl font-bold text-white mb-2">{project.category}</h3>
-                <p className="text-gray-300">{project.longDescription}</p>
+                <p className="text-gray-300">{project.long_description}</p>
               </div>
 
-              {/* Stats */}
               <div className="grid grid-cols-2 gap-4">
-                {Object.entries(project.stats).map(([key, value], index) => (
+                {Object.entries(project.stats || {}).map(([key, value], index) => (
                   <motion.div
-                    key={key}
+                    key={index}
                     variants={itemVariants}
                     className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
                   >
@@ -180,10 +184,9 @@ export default function ProjectDetail() {
                 ))}
               </div>
 
-              {/* CTA Buttons */}
               <div className="flex gap-4 pt-4">
                 <motion.a
-                  href={project.liveUrl}
+                  href={project.live_url}
                   target="_blank"
                   whileHover={{ scale: 1.05 }}
                   className={`flex-1 px-6 py-4 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg`}
@@ -192,7 +195,7 @@ export default function ProjectDetail() {
                   عرض الموقع
                 </motion.a>
                 <motion.a
-                  href={project.caseStudyUrl}
+                  href={project.case_study_url}
                   whileHover={{ scale: 1.05 }}
                   className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-bold flex items-center justify-center gap-2"
                 >
@@ -204,7 +207,6 @@ export default function ProjectDetail() {
           </div>
         </motion.section>
 
-        {/* ======= SCREENSHOTS CAROUSEL ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">
@@ -217,7 +219,7 @@ export default function ProjectDetail() {
               transition={{ duration: 20, repeat: Infinity }}
               className="flex gap-6 overflow-hidden"
             >
-              {project.screenshots.map((src, index) => (
+              {(project.screenshots || []).map((src, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
@@ -233,7 +235,6 @@ export default function ProjectDetail() {
           </div>
         </motion.section>
 
-        {/* ======= TECH STACK ORBIT ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">
@@ -246,7 +247,7 @@ export default function ProjectDetail() {
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               className="relative"
             >
-              {project.tags.map((tag, index) => (
+              {(project.tags || []).map((tag, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
@@ -271,13 +272,12 @@ export default function ProjectDetail() {
           </div>
         </motion.section>
 
-        {/* ======= PROJECT INFO CARDS ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: Calendar, title: 'تاريخ التسليم', value: project.date, color: '#10b981' },
               { icon: Clock, title: 'مدة المشروع', value: project.duration, color: '#06b6d4' },
-              { icon: Users, title: 'حجم الفريق', value: project.teamSize, color: '#f59e0b' }
+              { icon: Users, title: 'حجم الفريق', value: project.team_size, color: '#f59e0b' }
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -300,7 +300,6 @@ export default function ProjectDetail() {
           </div>
         </motion.section>
 
-        {/* ======= REVIEWS ORBIT ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">
@@ -343,7 +342,6 @@ export default function ProjectDetail() {
           </div>
         </motion.section>
 
-        {/* ======= COSMIC CTA ======= */}
         <motion.section 
           variants={containerVariants} 
           initial="hidden" 

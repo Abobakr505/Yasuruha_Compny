@@ -1,10 +1,16 @@
 import { motion } from 'framer-motion';
-import { Lock, Mail, Eye, EyeOff, Sparkles, Shield } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../lib/auth';
+// Replace supabase.auth.signInWithPassword with:
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -23,10 +29,16 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic for login
-    console.log('Login:', formData);
+    setError(null);
+    const { error: loginError } = await login(formData.email, formData.password);
+    if (loginError) {
+      setError((loginError as any)?.message || String(loginError));
+      console.error('Login error:', loginError);
+    } else {
+      navigate('/admin/projects');
+    }
   };
 
   return (
@@ -40,7 +52,6 @@ export default function Login() {
         animate="visible"
         className="w-full max-w-md"
       >
-        {/* Header */}
         <motion.div variants={itemVariants} className="text-center mb-8">
           <motion.div 
             animate={{ rotate: [0, 360] }}
@@ -60,13 +71,11 @@ export default function Login() {
           </motion.p>
         </motion.div>
 
-        {/* Form */}
         <motion.form 
           variants={itemVariants}
           onSubmit={handleSubmit}
           className="space-y-6 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
         >
-          {/* Email */}
           <motion.div variants={itemVariants}>
             <label className="block text-white mb-2">البريد الإلكتروني</label>
             <div className="relative">
@@ -82,7 +91,6 @@ export default function Login() {
             </div>
           </motion.div>
 
-          {/* Password */}
           <motion.div variants={itemVariants}>
             <label className="block text-white mb-2">كلمة المرور</label>
             <div className="relative">
@@ -105,7 +113,15 @@ export default function Login() {
             </div>
           </motion.div>
 
-          {/* Submit */}
+          {error && (
+            <motion.div
+              variants={itemVariants}
+              className="text-red-400 text-center"
+            >
+              {error}
+            </motion.div>
+          )}
+
           <motion.button
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}

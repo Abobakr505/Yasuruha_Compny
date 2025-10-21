@@ -1,10 +1,27 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
+import { supabase } from '../lib/supabase';
+
+// Motion variants used across the component
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const toastVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
 
 export default function Home() {
+    const [latestProjects, setLatestProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(null);
   const features = [
     {
       icon: Code,
@@ -96,36 +113,36 @@ export default function Home() {
     },
   ];
 
-  const latestProjects = [
-    {
-      title: 'منصة التجارة الإلكترونية',
-      description: 'منصة تجارة إلكترونية متكاملة',
-      category: 'متجر إلكتروني',
-      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-      gradient: 'from-emerald-500 to-teal-500',
-    },
-    {
-      title: 'تطبيق الرعاية الصحية',
-      description: 'تطبيق لإدارة المواعيد الطبية',
-      category: 'صحة',
-      image: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?auto=compress&cs=tinysrgb&w=800',
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
-      title: 'نظام إدارة الأعمال',
-      description: 'نظام ERP متكامل',
-      category: 'أعمال',
-      image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800',
-      gradient: 'from-purple-500 to-pink-500',
-    },
-    {
-      title: 'منصة التعليم الإلكتروني',
-      description: 'منصة تعليمية متقدمة',
-      category: 'تعليم',
-      image: 'https://images.pexels.com/photos/5905710/pexels-photo-5905710.jpeg?auto=compress&cs=tinysrgb&w=800',
-      gradient: 'from-orange-500 to-red-500',
-    },
-  ];
+  useEffect(() => {
+    const fetchLatestProjects = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('status', 'منشور')
+        .order('created_at', { ascending: false })
+        .limit(4);
+      if (error) {
+        console.error('Error fetching latest projects:', error);
+        showNotification('خطأ في جلب المشاريع: ' + error.message, 'error');
+      } else {
+        console.log('Fetched latest projects:', data); // Debug log
+        setLatestProjects(data);
+        if (data.length === 0) {
+          showNotification('لا توجد مشاريع منشورة متاحة', 'info');
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchLatestProjects();
+  }, []);
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000);
+  };
+
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
@@ -515,28 +532,53 @@ export default function Home() {
             <p className="text-xl text-gray-300">تعرف على أحدث إنجازاتنا في عالم التقنية</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {latestProjects.map((project, index) => (
-              <motion.div
-                key={index}
+          {loading ? (
+          <motion.div
+            variants={itemVariants}
+            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-4"
+          >
+            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            جاري التحميل...
+          </motion.div>
+          ) : latestProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {latestProjects.map((project, index) => (
+                <Link to={`/projects/${project.id}`} key={project.id} className="no-underline">
+                <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.05 }}
-                className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
-              >
-                <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className="text-gray-400 mb-4">{project.description}</p>
-                  <span className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium">
-                    {project.category}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300x192?text=صورة+غير+متوفرة';
+                    }}
+                  />
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
+                    <p className="text-gray-400 mb-4">{project.description}</p>
+                    <span className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium">
+                      {project.category}
+                    </span>
+                  </div>
+                </motion.div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <motion.div
+              variants={itemVariants}
+              className="text-center text-white text-xl"
+            >
+              لا توجد مشاريع منشورة متاحة
+            </motion.div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -593,6 +635,23 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+            {/* Toast Notification */}
+      {notification && (
+        <motion.div
+          variants={toastVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className={`fixed top-4 right-4 p-4 rounded-xl text-white flex items-center gap-2 shadow-lg ${
+            notification.type === 'success' ? 'bg-green-500/80' :
+            notification.type === 'error' ? 'bg-red-500/80' :
+            'bg-blue-500/80'
+          }`}
+        >
+          <X size={20} />
+          {notification.message}
+        </motion.div>
+      )}
     </div>
   );
 }

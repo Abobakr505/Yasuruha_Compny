@@ -252,9 +252,6 @@ export default function Contact() {
                         {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
                         <ChevronRight className="group-hover:translate-x-2 transition-transform" />
                       </span>
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                      />
                     </motion.button>
                   </form>
                 </motion.div>
