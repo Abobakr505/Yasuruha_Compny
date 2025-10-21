@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Users, TrendingUp, Award, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { getSession } from '../lib/auth';
 import StarField from '../components/StarField';
 
 const iconMap = {
@@ -19,7 +18,6 @@ export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
-  const navigate = useNavigate();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -48,16 +46,6 @@ export default function Projects() {
   };
 
   useEffect(() => {
-    const checkSessionAndFetch = async () => {
-      const { data, error } = await getSession();
-      if (error || !data.session) {
-        showNotification('يرجى تسجيل الدخول لعرض المشاريع', 'error');
-        navigate('/login');
-      } else {
-        fetchProjects();
-      }
-    };
-
     const fetchProjects = async () => {
       setLoading(true);
       const { data, error } = await supabase
@@ -77,8 +65,8 @@ export default function Projects() {
       setLoading(false);
     };
 
-    checkSessionAndFetch();
-  }, [navigate]);
+    fetchProjects();
+  }, []);
 
   const showNotification = (message, type) => {
     setNotification({ message, type });
