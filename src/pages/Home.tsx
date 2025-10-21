@@ -136,7 +136,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.1),transparent_50%)]" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 relative z-10 ">
           <div className="grid lg:grid-cols-2 gap-12 items-center ">
             <div className="text-center lg:text-right">
             <motion.div
@@ -296,7 +296,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="LAXR  text-3xl font-bold text-white mb-4">
                 رؤيتنا ورسالتنا
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
