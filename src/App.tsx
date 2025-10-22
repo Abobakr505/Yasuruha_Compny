@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,12 +12,20 @@ import Login from './pages/Login';
 import AdminProjects from './pages/AdminProjects';
 import Error404 from './pages/Error404';
 
-function App() {
+function AppLayout() {
+  const location = useLocation();
+
+  // الصفحات التي نريد إخفاء الـ Navbar و Footer و زر واتساب فيها
+  const hideLayoutPaths = ['/login', '/admin/projects'];
+
+  // تحقق مما إذا كان المسار الحالي ضمن الصفحات المخفية
+  const hideLayout = hideLayoutPaths.includes(location.pathname);
+
   return (
-    <Router>
-      <div className="min-h-screen">
-        <Navbar />
-        <WhatsAppButton/>
+    <div className="min-h-screen flex flex-col">
+      {!hideLayout && <Navbar />}
+
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -26,11 +34,21 @@ function App() {
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-        <Route path="/admin/projects" element={<AdminProjects />} />
-        <Route path="*" element={<Error404 />} />
+          <Route path="/admin/projects" element={<AdminProjects />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
-        <Footer />
-      </div>
+      </main>
+
+      {!hideLayout && <WhatsAppButton />}
+      {!hideLayout && <Footer />}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppLayout />
     </Router>
   );
 }

@@ -245,7 +245,7 @@ export default function Home() {
               transition={{ duration: 1, delay: 1 }}
               className="mt-12 text-emerald-400"
             >
-              <p className="text-sm mb-2">الثقة والتميز في كل مشروع</p>
+              <p className="text-sm mb-2 font-bold">الثقة والتميز في كل مشروع</p>
               <div className="flex justify-center lg:justify-start gap-1">
                 {[...Array(5)].map((_, i) => (
                   <motion.span
@@ -275,7 +275,7 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block "
         >
           <ChevronDown className="w-8 h-8 text-emerald-400" />
         </motion.div>
