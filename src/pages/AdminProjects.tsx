@@ -649,7 +649,7 @@ export default function AdminProjects() {
                   <X size={28} />
                 </motion.button>
               </div>
-              <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-2AQ md:grid-cols-2  gap-6">
                 <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">القالب</label>
                   <select

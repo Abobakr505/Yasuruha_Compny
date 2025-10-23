@@ -1,18 +1,21 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, Phone, MapPin, Send, MessageSquare, Clock, Sparkles, 
-  ChevronRight, Users, Zap, Shield 
+  ChevronRight, Users, Zap, Shield, ChevronDown 
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import StarField from '../components/StarField';
+import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', subject: '', message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const formRef = useRef();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -31,19 +34,76 @@ export default function Contact() {
     }
   };
 
+  const dropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -10,
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      const result = await emailjs.sendForm(
+        'service_1bdsc8t', // Replace with your EmailJS service ID
+        'template_zvn7klm', // Replace with your EmailJS template ID
+        formRef.current,
+        'k9Ti1ib4trNRh4VAQ' // Replace with your EmailJS public key
+      );
+
+
+      if (result.status === 200) {
+        Swal.fire({
+          title: 'تم الإرسال!',
+          text: 'تم إرسال رسالتك بنجاح. سنتواصل معك قريباً!',
+          icon: 'success',
+          confirmButtonText: 'حسنًا',
+          customClass: {
+            popup: 'bg-white/95 backdrop-blur-sm rounded-2xl',
+            title: 'text-2xl font-bold text-emerald-600',
+            content: 'text-gray-700',
+            confirmButton: 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white px-6 py-3 rounded-xl'
+          },
+          showClass: { popup: 'animate__animated animate__fadeInDown' },
+          hideClass: { popup: 'animate__animated animate__fadeOutUp' }
+        });
+
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'خطأ!',
+        text: 'حدث خطأ أثناء إرسال الرسالة. الرجاء المحاولة مرة أخرى.',
+        icon: 'error',
+        confirmButtonText: 'حسنًا',
+        customClass: {
+          popup: 'bg-white/95 backdrop-blur-sm rounded-2xl',
+          title: 'text-2xl font-bold text-red-600',
+          content: 'text-gray-700',
+          confirmButton: 'bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl'
+        }
+      });
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 2000);
+    }
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubjectSelect = (subject) => {
+    setFormData({ ...formData, subject: subject.value });
+    setIsDropdownOpen(false);
   };
 
   const contactInfo = [
@@ -53,9 +113,18 @@ export default function Contact() {
     { icon: Clock, title: 'ساعات العمل', value: '9AM - 6PM', link: '#', color: '#f97316' }
   ];
 
+  const subjects = [
+    { value: 'web', label: 'تطوير الويب', icon: '🌐', color: '#3b82f6' },
+    { value: 'mobile', label: 'تطبيقات الموبايل', icon: '📱', color: '#10b981' },
+    { value: 'ecommerce', label: 'متاجر إلكترونية',
+
+ icon: '🛒', color: '#8b5cf6' },
+    { value: 'consulting', label: 'استشارات', icon: '💡', color: '#f97316' },
+    { value: 'other', label: 'أخرى', icon: '❓', color: '#ec4899' }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] pt-32 pb-24 relative overflow-hidden">
-      {/* Animated Background */}
       <StarField />
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.1),transparent_50%)]" />
@@ -74,7 +143,6 @@ export default function Contact() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* ======= HERO MAGIC ======= */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -115,12 +183,11 @@ export default function Contact() {
             variants={itemVariants}
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-             <span className="text-emerald-400 font-bold"> تواصل معنا </span>، حتي {' '}
+            <span className="text-emerald-400 font-bold"> تواصل معنا </span>، حتي {' '}
             <span className="text-cyan-400">نحول</span> <span className="text-purple-400">مشروعك </span> إلى نجاح مذهل
           </motion.p>
         </motion.div>
 
-        {/* ======= CONTACT ORBIT ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">
@@ -165,10 +232,8 @@ export default function Contact() {
           </div>
         </motion.section>
 
-        {/* ======= MAIN CONTACT SECTION ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* FORM */}
             <motion.div variants={itemVariants} className="relative group">
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden h-full">
                 <motion.div 
@@ -180,18 +245,7 @@ export default function Contact() {
                     <h2 className="text-3xl font-bold text-white">أرسل رسالة</h2>
                   </div>
 
-                  {submitted && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="mb-6 p-6 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl text-white shadow-2xl"
-                    >
-                      <Sparkles className="w-6 h-6 mx-auto mb-2" />
-                      تم إرسال رسالتك بنجاح! ✨
-                    </motion.div>
-                  )}
-
-                  <form onSubmit={handleSubmit} className="space-y-6 flex-1">
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 flex-1">
                     {['name', 'email', 'phone'].map((field) => (
                       <motion.div 
                         key={field}
@@ -211,21 +265,71 @@ export default function Contact() {
                       </motion.div>
                     ))}
 
-                    <motion.div variants={itemVariants}>
-                      <select
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-xl text-white focus:outline-none focus:border-emerald-400/50 transition-all text-lg"
+                    <motion.div variants={itemVariants} className="relative z-20">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="relative"
                       >
-                        <option value="">اختر الموضوع</option>
-                        <option value="web">تطوير الويب</option>
-                        <option value="mobile">تطبيقات الموبايل</option>
-                        <option value="ecommerce">متاجر إلكترونية</option>
-                        <option value="consulting">استشارات</option>
-                        <option value="other">أخرى</option>
-                      </select>
+                        <button
+                          type="button"
+                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                          className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-xl text-white text-lg flex items-center justify-between focus:outline-none focus:border-emerald-400/50 transition-all"
+                        >
+                          <span>
+                            {formData.subject 
+                              ? subjects.find(s => s.value === formData.subject)?.icon + ' ' + 
+                                subjects.find(s => s.value === formData.subject)?.label
+                              : 'اختر الموضوع'}
+                          </span>
+                          <motion.div
+                            animate={{ rotate: isDropdownOpen ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <ChevronDown className="w-5 h-5" />
+                          </motion.div>
+                        </button>
+                        <input
+                          type="hidden"
+                          name="subject"
+                          value={formData.subject}
+                        />
+                        <AnimatePresence>
+                          {isDropdownOpen && (
+                            <motion.div
+                              variants={dropdownVariants}
+                              initial="hidden"
+                              animate="visible"
+                              exit="hidden"
+                              className="absolute w-full mt-2 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-2xl z-20 overflow-hidden "
+                            >
+                              {subjects.map((subject) => (
+                                <motion.button
+                                  key={subject.value}
+                                  type="button"
+                                  onClick={() => handleSubjectSelect(subject)}
+                                  whileHover={{ 
+                                    backgroundColor: `${subject.color}20`,
+                                    x: 10
+                                  }}
+                                  className="w-full px-6 py-3 text-white text-lg flex items-center gap-3 text-right hover:bg-white/20 transition-colors "
+                                  style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
+                                >
+                                  <motion.span
+                                    animate={{ scale: [1, 1.2, 1] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="w-8 h-8 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: subject.color }}
+                                  >
+                                    {subject.icon}
+                                  </motion.span>
+                                  {subject.label}
+                                </motion.button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
@@ -246,21 +350,32 @@ export default function Contact() {
                       whileTap={{ scale: 0.95 }}
                       type="submit"
                       disabled={isSubmitting}
-                      className="group relative px-8 py-6 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-2xl font-bold text-xl shadow-2xl overflow-hidden disabled:opacity-50"
+                      className="group relative px-8 py-6 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-2xl font-bold text-xl shadow-2xl overflow-hidden disabled:opacity-50 z-10"
                     >
-
-                      <span className="relative z-10 flex items-center gap-3">
-                        {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
-                        <ChevronRight className="group-hover:translate-x-2 transition-transform" />
+                      <span className="relative z-10 flex items-center gap-3 ">
+                        {isSubmitting ? (
+                          <>
+                            جاري الإرسال...
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-5 h-5 border-2 border-white border-t-transparent rounded-full "
+                            />
+                          </>
+                        ) : (
+                          <>
+                            إرسال الرسالة
+                            <ChevronRight className="group-hover:translate-x-2 transition-transform" />
+                          </>
+                        )}
                       </span>
-                      <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity " />
                     </motion.button>
                   </form>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* CONTACT INFO GALAXY */}
             <motion.div variants={itemVariants} className="space-y-6">
               {contactInfo.map((info, index) => (
                 <motion.a
@@ -292,7 +407,6 @@ export default function Contact() {
                 </motion.a>
               ))}
 
-              {/* Live Status */}
               <motion.div
                 variants={itemVariants}
                 className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 text-center"
@@ -309,7 +423,6 @@ export default function Contact() {
           </div>
         </motion.section>
 
-        {/* ======= COSMIC CTA ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-24">
           <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
             <motion.div 
@@ -333,7 +446,6 @@ export default function Contact() {
             </motion.p>
           </motion.div>
 
-          {/* Benefits Orbit */}
           <motion.div 
             variants={containerVariants}
             className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto"
@@ -350,12 +462,12 @@ export default function Contact() {
                 className="group p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 text-center"
               >
                 <motion.div 
-                animate={{ rotate: [0, 360] }}
+                  animate={{ rotate: [0, 360] }}
                   transition={{ duration: 10 + index * 2, repeat: Infinity }}
                   className="w-12 h-12 mx-auto mb-4 rounded-full flex justify-center"
                   style={{ backgroundColor: item.color + '40' }}
                 >
-                  <item.icon className={`w-6 h-6 text-white mx-auto mt-3 `} />
+                  <item.icon className="w-6 h-6 text-white mx-auto mt-3" />
                 </motion.div>
                 <p className="text-white font-semibold">{item.text}</p>
               </motion.div>
@@ -363,7 +475,6 @@ export default function Contact() {
           </motion.div>
         </motion.section>
 
-        {/* ======= MAP ======= */}
         <motion.div variants={itemVariants} className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.6847798424!2d46.7285!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQyJzQ5LjAiTiA0NsKwNDMnNDIuNiJF!5e0!3m2!1sar!2ssa!4v1234567890"

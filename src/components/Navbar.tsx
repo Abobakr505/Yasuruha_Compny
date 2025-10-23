@@ -14,7 +14,7 @@ export default function Navbar() {
     { path: '/about', label: 'من نحن', icon: Info },
     { path: '/services', label: 'الخدمات', icon: Package },
     { path: '/projects', label: 'المشاريع', icon: Folder },
-    { path: '/contact', label: 'اتصل بنا', icon: MessageSquare },
+    { path: '/contact', label: 'تواصل معنا ', icon: MessageSquare },
   ];
 
   const sidebarVariants = {

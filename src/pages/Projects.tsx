@@ -143,7 +143,7 @@ export default function Projects() {
         {loading && (
           <motion.div
             variants={itemVariants}
-            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-4"
+            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-8 "
           >
             <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
             جاري التحميل...

@@ -30,32 +30,32 @@ export default function About() {
 
   const teamMembers = [
     {
-      name: 'أحمد الشريف',
+      name: ' أبوبكر حسن',
       role: 'المؤسس',
-      specialty: 'تطوير الويب',
+      specialty: 'مطور ويب كامل',
       years: 8,
       social: Github,
       color: '#10b981'
     },
     {
-      name: 'فاطمة السعدي',
-      role: 'مديرة التطوير',
+      name: ' محمد أحمد ',
+      role: ' مطور تطبيقات',
       specialty: 'تطبيقات الموبايل',
       years: 6,
       social: Twitter,
       color: '#06b6d4'
     },
     {
-      name: 'محمد العتيبي',
-      role: 'خبير السحابة',
-      specialty: 'حلول AWS',
+      name: 'محمد عبدالرحيم ',
+      role: ' مطور وجهات اماميه',
+      specialty: 'تجربة المستخدم',
       years: 7,
       social: Linkedin,
       color: '#f59e0b'
     },
     {
-      name: 'نورة الدوسري',
-      role: 'مصممة UI/UX',
+      name: ' أحمد أمين',
+      role: 'مصمم UI/UX',
       specialty: 'تجربة المستخدم',
       years: 5,
       social: Building,
@@ -147,7 +147,7 @@ export default function About() {
         {/* ======= JOURNEY ORB ======= */}
         <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
           <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className=" text-4xl md:text-5xl font-bold text-white mb-4">
               رحلتنا <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">الساحرة</span>
             </h2>
           </motion.div>
