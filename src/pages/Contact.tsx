@@ -4,7 +4,7 @@ import {
   ChevronRight, Users, Zap, Shield, ChevronDown 
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import StarField from '../components/StarField';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
@@ -105,6 +105,10 @@ export default function Contact() {
     setFormData({ ...formData, subject: subject.value });
     setIsDropdownOpen(false);
   };
+
+    useEffect(() =>{
+    document.title = "يسِّرها - تواصل معنا  ";
+  })
 
   const contactInfo = [
     { icon: Mail, title: 'البريد الإلكتروني', value: 'yasuruha1@gmail.com', link: 'mailto:yasuruha1@gmail.com', color: '#3b82f6' },

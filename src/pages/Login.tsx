@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Lock, Mail, Eye, EyeOff, Sparkles } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/auth';
@@ -40,6 +40,10 @@ export default function Login() {
       navigate('/admin/projects');
     }
   };
+
+    useEffect(() =>{
+    document.title = "تسجيل الدخول ";
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] flex items-center justify-center p-4 relative overflow-hidden">

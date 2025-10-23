@@ -64,7 +64,7 @@ export default function Projects() {
       }
       setLoading(false);
     };
-
+    document.title = "يسِّرها - المشاريع  ";
     fetchProjects();
   }, []);
 

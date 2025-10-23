@@ -8,8 +8,12 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StarField from '../components/StarField';
+import { useEffect } from 'react';
 
 export default function Services() {
+  useEffect(() =>{
+    document.title = "يسِّرها - خدمات  ";
+  })
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

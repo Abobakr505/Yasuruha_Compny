@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StarField from '../components/StarField';
+import { useEffect } from 'react';
 
 export default function About() {
   const containerVariants = {
@@ -76,6 +77,9 @@ export default function About() {
     { icon: Shield, title: 'الأمان', desc: 'حماية كاملة', color: '#ef4444' },
     { icon: Users, title: 'الشراكة', desc: 'نجاح مشترك', color: '#f59e0b' }
   ];
+  useEffect(() =>{
+    document.title = "يسِّرها - من نحن  ";
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] pt-32 pb-24 relative overflow-hidden">

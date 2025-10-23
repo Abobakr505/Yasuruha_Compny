@@ -3,10 +3,11 @@ import { Plus, Edit, Trash2, Eye, Download, X, Check, Star, Info, MessageSquare 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
+import CreatableSelect from 'react-select/creatable'; // Use CreatableSelect for custom tags
 
-// مكون منفصل لنموذج الآراء
-function ReviewForm({ projectId, onAddReview, isAddingReview }) {
-  const [newReview, setNewReview] = useState({ text: '', name: '', rating: 5 });
+// ReviewForm component for adding and editing reviews
+function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, editingReview, setEditingReview }) {
+  const [newReview, setNewReview] = useState(editingReview || { text: '', name: '', rating: 5 });
   const [notification, setNotification] = useState(null);
 
   const showNotification = (message, type) => {
@@ -18,7 +19,11 @@ function ReviewForm({ projectId, onAddReview, isAddingReview }) {
     e.preventDefault();
     console.log('handleSubmit called with review:', newReview, 'projectId:', projectId);
 
-    // التحقق من حالة المصادقة
+    if (!projectId) {
+      showNotification('لا يوجد مشروع محدد لإضافة الرأي', 'error');
+      return;
+    }
+
     const { data: { session } } = await supabase.auth.getSession();
     console.log('Session:', session);
     if (!session) {
@@ -34,32 +39,52 @@ function ReviewForm({ projectId, onAddReview, isAddingReview }) {
       showNotification('التقييم يجب أن يكون بين 1 و5', 'error');
       return;
     }
-    if (!projectId) {
-      showNotification('لا يوجد مشروع محدد لإضافة الرأي', 'error');
-      return;
-    }
 
     try {
-      const { data, error } = await supabase
-        .from('reviews')
-        .insert({
-          project_id: projectId,
-          text: newReview.text,
-          name: newReview.name,
-          rating: parseInt(newReview.rating),
-        })
-        .select();
-      if (error) {
-        console.error('Error inserting review:', error);
-        throw new Error(error.message);
+      if (editingReview) {
+        const { data, error } = await supabase
+          .from('reviews')
+          .update({
+            text: newReview.text,
+            name: newReview.name,
+            rating: parseInt(newReview.rating),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', editingReview.id)
+          .eq('project_id', projectId) // Ensure project_id matches
+          .select();
+        if (error) {
+          console.error('Supabase update error:', error);
+          throw new Error(error.message);
+        }
+        console.log('Review updated successfully:', data);
+        onUpdateReview(data[0]);
+        setNewReview({ text: '', name: '', rating: 5 });
+        setEditingReview(null);
+        showNotification('تم تحديث الرأي بنجاح', 'success');
+      } else {
+        const { data, error } = await supabase
+          .from('reviews')
+          .insert({
+            project_id: projectId,
+            text: newReview.text,
+            name: newReview.name,
+            rating: parseInt(newReview.rating),
+            created_at: new Date().toISOString(),
+          })
+          .select();
+        if (error) {
+          console.error('Supabase insert error:', error);
+          throw new Error(error.message);
+        }
+        console.log('Review added successfully:', data);
+        onAddReview(data[0]);
+        setNewReview({ text: '', name: '', rating: 5 });
+        showNotification('تم إضافة الرأي بنجاح', 'success');
       }
-      console.log('Review added successfully:', data);
-      onAddReview(data[0]);
-      setNewReview({ text: '', name: '', rating: 5 });
-      showNotification('تم إضافة الرأي بنجاح', 'success');
     } catch (err) {
       console.error('Error in handleSubmit:', err);
-      showNotification(`خطأ في إضافة الرأي: ${err.message}`, 'error');
+      showNotification(`خطأ في ${editingReview ? 'تحديث' : 'إضافة'} الرأي: ${err.message}`, 'error');
     }
   };
 
@@ -93,9 +118,9 @@ function ReviewForm({ projectId, onAddReview, isAddingReview }) {
         <motion.button
           whileHover={{ scale: 1.05 }}
           type="submit"
-          disabled={isAddingReview}
+          disabled={isAddingReview || !projectId}
           className={`w-full p-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 ${
-            isAddingReview ? 'opacity-50 cursor-not-allowed' : ''
+            isAddingReview || !projectId ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           {isAddingReview ? (
@@ -103,7 +128,7 @@ function ReviewForm({ projectId, onAddReview, isAddingReview }) {
           ) : (
             <Plus size={20} />
           )}
-          {isAddingReview ? 'جاري الإضافة...' : 'إضافة رأي'}
+          {isAddingReview ? 'جاري الإضافة...' : editingReview ? 'تحديث الرأي' : 'إضافة رأي'}
         </motion.button>
       </form>
       {notification && (
@@ -138,6 +163,7 @@ export default function AdminProjects() {
   const [reviews, setReviews] = useState([]);
   const [isLoadingReviews, setIsLoadingReviews] = useState(false);
   const [isAddingReview, setIsAddingReview] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -168,6 +194,17 @@ export default function AdminProjects() {
   const [screenshotFiles, setScreenshotFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const navigate = useNavigate();
+
+  const tagOptions = [
+    { value: 'React', label: 'React' },
+    { value: 'Node.js', label: 'Node.js' },
+    { value: 'Next.js', label: 'Next.js' },
+    { value: 'Tailwind', label: 'Tailwind' },
+    { value: 'Firebase', label: 'Firebase' },
+    { value: 'Stripe', label: 'Stripe' },
+    { value: 'TypeScript', label: 'TypeScript' },
+    { value: 'GraphQL', label: 'GraphQL' },
+  ];
 
   const Infos = {
     ecommerce: {
@@ -250,6 +287,10 @@ export default function AdminProjects() {
   };
 
   useEffect(() => {
+    document.title = "لوحة التحكم";
+  }, []);
+
+  useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       console.log('Session on load:', session);
@@ -265,8 +306,9 @@ export default function AdminProjects() {
 
   const fetchProjects = useCallback(async () => {
     try {
-      const { data, error } = await supabase.from('projects').select('*');
+      const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
       if (error) throw new Error(error.message);
+      console.log('Fetched projects:', data);
       setProjects(data || []);
     } catch (err) {
       showNotification('خطأ في جلب المشاريع: ' + err.message, 'error');
@@ -280,6 +322,7 @@ export default function AdminProjects() {
       if (projectId) query = query.eq('project_id', projectId);
       const { data, error } = await query;
       if (error) throw new Error(error.message);
+      console.log('Fetched reviews:', data);
       setReviews(data || []);
     } catch (err) {
       showNotification('خطأ في جلب الآراء: ' + err.message, 'error');
@@ -353,8 +396,8 @@ export default function AdminProjects() {
       screenshots: screenshotUrls,
       tags: formData.tags.length ? formData.tags : [],
       stats: formData.stats,
-      live_url: formData.live_url?.startsWith('http') ? formData.live_url : `https://${formData.live_url}`,
-      case_study_url: formData.case_study_url?.startsWith('http') ? formData.case_study_url : `https://${formData.case_study_url}`,
+      live_url: formData.live_url?.startsWith('http') ? formData.live_url : (formData.live_url ? `https://${formData.live_url}` : ''),
+      case_study_url: formData.case_study_url?.startsWith('http') ? formData.case_study_url : (formData.case_study_url ? `https://${formData.case_study_url}` : ''),
     };
 
     try {
@@ -375,10 +418,18 @@ export default function AdminProjects() {
   };
 
   const handleAddReview = (review) => {
-    setIsAddingReview(true);
-    setReviews((prev) => [...prev, review]);
-    fetchReviews(review.project_id); // إعادة جلب الآراء لضمان التحديث
+    console.log('Adding review:', review);
+    setReviews((prev) => [review, ...prev]);
     setIsAddingReview(false);
+    fetchReviews(review.project_id); // Refresh reviews for the project
+  };
+
+  const handleUpdateReview = (updatedReview) => {
+    console.log('Updating review:', updatedReview);
+    setReviews((prev) =>
+      prev.map((review) => (review.id === updatedReview.id ? updatedReview : review))
+    );
+    fetchReviews(updatedReview.project_id);
   };
 
   const handleDeleteReview = async (reviewId) => {
@@ -392,7 +443,13 @@ export default function AdminProjects() {
     }
   };
 
+  const handleEditReview = (review) => {
+    console.log('Editing review:', review);
+    setEditingReview(review);
+  };
+
   const handleEditProject = (project) => {
+    console.log('Editing project:', project);
     setFormData({
       title: project.title || '',
       category: project.category || '',
@@ -459,19 +516,13 @@ export default function AdminProjects() {
     setEditId(null);
     setShowForm(false);
     setReviews([]);
+    setEditingReview(null);
     setUploadProgress({});
   };
 
   const showNotification = (message, type) => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 5000);
-  };
-
-  const handleArrayInput = (field, value) => {
-    setFormData({
-      ...formData,
-      [field]: value.split(',').map((item) => item.trim()).filter((item) => item),
-    });
   };
 
   const applyInfo = (InfoName) => {
@@ -554,7 +605,7 @@ export default function AdminProjects() {
                 </tr>
               </thead>
               <tbody>
-                {projects.map((project, index) => (
+                {projects.map((project) => (
                   <motion.tr
                     key={project.id}
                     variants={itemVariants}
@@ -649,7 +700,7 @@ export default function AdminProjects() {
                   <X size={28} />
                 </motion.button>
               </div>
-            <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-2AQ md:grid-cols-2  gap-6">
+              <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">القالب</label>
                   <select
@@ -796,12 +847,57 @@ export default function AdminProjects() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-white font-semibold mb-2">الوسوم (مفصولة بفواصل)</label>
-                  <input
-                    placeholder="الوسوم,مثال: React,Node.js"
-                    className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
-                    value={formData.tags.join(',')}
-                    onChange={(e) => handleArrayInput('tags', e.target.value)}
+                  <label className="block text-white font-semibold mb-2">الوسوم</label>
+                  <CreatableSelect
+                    isMulti
+                    options={tagOptions}
+                    value={tagOptions.filter((option) => formData.tags.includes(option.value)).concat(
+                      formData.tags
+                        .filter((tag) => !tagOptions.some((option) => option.value === tag))
+                        .map((tag) => ({ value: tag, label: tag }))
+                    )}
+                    onChange={(selected) => setFormData({ ...formData, tags: selected.map((opt) => opt.value) })}
+                    formatCreateLabel={(inputValue) => `إضافة وسم: "${inputValue}"`}
+                    placeholder="اكتب أو اختر الوسوم..."
+                    className="text-black"
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        backgroundColor: 'rgba(15, 23, 42, 0.5)',
+                        borderColor: 'rgba(16, 185, 129, 0.3)',
+                        color: 'white',
+                        borderRadius: '0.75rem',
+                        padding: '0.75rem',
+                      }),
+                      menu: (base) => ({
+                        ...base,
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                      }),
+                      option: (base, { isFocused }) => ({
+                        ...base,
+                        backgroundColor: isFocused ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
+                        color: 'white',
+                      }),
+                      multiValue: (base) => ({
+                        ...base,
+                        backgroundColor: 'rgba(16, 185, 129, 0.3)',
+                      }),
+                      multiValueLabel: (base) => ({
+                        ...base,
+                        color: 'white',
+                      }),
+                      multiValueRemove: (base) => ({
+                        ...base,
+                        color: 'white',
+                        ':hover': {
+                          backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        },
+                      }),
+                      input: (base) => ({
+                        ...base,
+                        color: 'white',
+                      }),
+                    }}
                   />
                 </div>
                 <div className="col-span-2">
@@ -934,7 +1030,10 @@ export default function AdminProjects() {
                     <ReviewForm
                       projectId={editId || projects[0]?.id}
                       onAddReview={handleAddReview}
+                      onUpdateReview={handleUpdateReview}
                       isAddingReview={isAddingReview}
+                      editingReview={editingReview}
+                      setEditingReview={setEditingReview}
                     />
                     <div className="mt-4 space-y-4">
                       {isLoadingReviews ? (
@@ -959,13 +1058,22 @@ export default function AdminProjects() {
                                 <p className="text-white text-sm">{review.text}</p>
                                 <p className="text-gray-400 text-xs">— {review.name}</p>
                               </div>
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                className="p-2 bg-red-500/80 rounded-full text-white"
-                                onClick={() => handleDeleteReview(review.id)}
-                              >
-                                <Trash2 size={16} />
-                              </motion.button>
+                              <div className="flex gap-2">
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  className="p-2 bg-emerald-500/80 rounded-full text-white"
+                                  onClick={() => handleEditReview(review)}
+                                >
+                                  <Edit size={16} />
+                                </motion.button>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  className="p-2 bg-red-500/80 rounded-full text-white"
+                                  onClick={() => handleDeleteReview(review.id)}
+                                >
+                                  <Trash2 size={16} />
+                                </motion.button>
+                              </div>
                             </motion.div>
                           ))
                       ) : (

@@ -36,7 +36,13 @@ export default function ProjectDetail() {
       transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
-
+  useEffect(() => {
+    if (project && project.title) {
+      document.title = `يسِّرها - ${project.title}`;
+    } else {
+      document.title = 'يسِّرها';
+    }
+  }, [project]);
   useEffect(() => {
     const fetchProject = async () => {
       try {
