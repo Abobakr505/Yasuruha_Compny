@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X  , Star} from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
@@ -19,9 +19,11 @@ const toastVariants = {
 };
 
 export default function Home() {
-    const [latestProjects, setLatestProjects] = useState([]);
+  const [latestProjects, setLatestProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null); // State to manage open FAQ
+
   const features = [
     {
       icon: Code,
@@ -113,6 +115,49 @@ export default function Home() {
     },
   ];
 
+  const testimonials = [
+    {
+      name: 'أحمد محمد',
+      role: 'مدير شركة تقنية',
+      image: 'https://via.placeholder.com/100',
+      text: 'تعاونت مع يسرها في تطوير تطبيق ويب لشركتنا، وكانت التجربة مذهلة! الفريق محترف وملتزم بالمواعيد.',
+      rating: 5,
+    },
+    {
+      name: 'سارة عبدالله',
+      role: 'صاحبة متجر إلكتروني',
+      image: 'https://via.placeholder.com/100',
+      text: 'تصميم واجهة المستخدم كان رائعاً وسهل الاستخدام، مما زاد من رضا عملائنا بنسبة كبيرة.',
+      rating: 4,
+    },
+    {
+      name: 'محمود علي',
+      role: 'مدير مشروع',
+      image: 'https://via.placeholder.com/100',
+      text: 'حلول السحابة التي قدمتها يسرها ساعدتنا على تحسين الأداء وتقليل التكاليف بشكل ملحوظ.',
+      rating: 5,
+    },
+  ];
+
+  const faqs = [
+    {
+      question: 'ما هي الخدمات التي تقدمها يسرها؟',
+      answer: 'نقدم مجموعة واسعة من الخدمات تشمل تطوير تطبيقات الويب والموبايل، حلول السحابة، تصميم واجهات المستخدم، والأمن السيبراني.',
+    },
+    {
+      question: 'كم يستغرق تطوير مشروع؟',
+      answer: 'يعتمد ذلك على حجم المشروع وتعقيده. عادةً، نقدم تقديرًا زمنيًا دقيقًا بعد مناقشة متطلبات المشروع مع العميل.',
+    },
+    {
+      question: 'هل تقدمون دعمًا فنيًا بعد إطلاق المشروع؟',
+      answer: 'نعم، نقدم دعمًا فنيًا مستمرًا على مدار الساعة لضمان استمرارية عمل مشروعك بكفاءة.',
+    },
+    {
+      question: 'كيف يمكنني الحصول على عرض أسعار؟',
+      answer: 'يمكنك التواصل معنا عبر صفحة "اتصل بنا"، وسنقوم بتقديم عرض أسعار مخصص بناءً على احتياجاتك.',
+    },
+  ];
+
   useEffect(() => {
     const fetchLatestProjects = async () => {
       setLoading(true);
@@ -143,134 +188,129 @@ export default function Home() {
     setTimeout(() => setNotification(null), 5000);
   };
 
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index); // Toggle open/close FAQ
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <StarField />
-
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.1),transparent_50%)]" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 relative z-10 ">
           <div className="grid lg:grid-cols-2 gap-12 items-center ">
             <div className="text-center lg:text-right">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="mb-6"
-            >
               <motion.div
-                animate={{
-                  boxShadow: [
-                    '0 0 20px rgba(16, 185, 129, 0.3)',
-                    '0 0 40px rgba(16, 185, 129, 0.5)',
-                    '0 0 20px rgba(16, 185, 129, 0.3)',
-                  ],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="inline-block mb-6 rounded-full"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="mb-6"
               >
-                <span className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium ">
-                  <Sparkles className="w-4 h-4" />
-                  الشركة الرائدة في التحول الرقمي
-                </span>
+                <motion.div
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(16, 185, 129, 0.3)',
+                      '0 0 40px rgba(16, 185, 129, 0.5)',
+                      '0 0 20px rgba(16, 185, 129, 0.3)',
+                    ],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="inline-block mb-6 rounded-full"
+                >
+                  <span className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium ">
+                    <Sparkles className="w-4 h-4" />
+                    الشركة الرائدة في التحول الرقمي
+                  </span>
+                </motion.div>
               </motion.div>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-6xl font-bold text-white mb-6"
-            >
-              نصنع
-              <motion.span
-                className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient-x "
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{ duration: 5, repeat: Infinity }}
-                style={{ backgroundSize: '200% 200%' }}
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-5xl md:text-6xl font-bold text-white mb-6"
               >
-                {' '}
-                مستقبلك الرقمي
-              </motion.span>
-              <br />
-              بتميز وإبداع
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto lg:mx-0 leading-relaxed"
-            >
-              نحوّل أفكارك المبتكرة إلى حلول رقمية تتميز في السوق، نتفوق وننجح معًا
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
-              <Link to="/contact" className='flex justify-center'>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-full font-bold text-lg flex items-center gap-2 justify-center shadow-lg shadow-emerald-500/30"
+                نصنع
+                <motion.span
+                  className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient-x "
+                  animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  }}
+                  transition={{ duration: 5, repeat: Infinity }}
+                  style={{ backgroundSize: '200% 200%' }}
                 >
-                  ابدأ رحلتك معنا
-                  <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-                </motion.button>
-              </Link>
-
-              <Link to="/services">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 border-2 border-emerald-400/50 text-white rounded-full font-bold text-lg hover:bg-emerald-500/10 transition-colors"
-                >
-                  استكشف إبداعنا
-                </motion.button>
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-              className="mt-12 text-emerald-400"
-            >
-              <p className="text-sm mb-2 font-bold">الثقة والتميز في كل مشروع</p>
-              <div className="flex justify-center lg:justify-start gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2 + i * 0.1 }}
-                    className="text-xl"
+                  {' '}
+                  مستقبلك الرقمي
+                </motion.span>
+                <br />
+                بتميز وإبداع
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto lg:mx-0 leading-relaxed"
+              >
+                نحوّل أفكارك المبتكرة إلى حلول رقمية تتميز في السوق، نتفوق وننجح معًا
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              >
+                <Link to="/contact" className='flex justify-center'>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-full font-bold text-lg flex items-center gap-2 justify-center shadow-lg shadow-emerald-500/30"
                   >
-                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
-                 </motion.span>
-                ))}
-              </div>
+                    ابدأ رحلتك معنا
+                    <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+                  </motion.button>
+                </Link>
+                <Link to="/services">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 border-2 border-emerald-400/50 text-white rounded-full font-bold text-lg hover:bg-emerald-500/10 transition-colors"
+                  >
+                    استكشف إبداعنا
+                  </motion.button>
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1 }}
+                className="mt-12 text-emerald-400"
+              >
+                <p className="text-sm mb-2 font-bold">الثقة والتميز في كل مشروع</p>
+                <div className="flex justify-center lg:justify-start gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.2 + i * 0.1 }}
+                      className="text-xl"
+                    >
+                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className=" lg:block"
+            >
+              <Terminal />
             </motion.div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className=" lg:block"
-          >
-            <Terminal />
-          </motion.div>
-        </div>
         </div>
         <motion.div
           animate={{ y: [0, 10, 0] }}
@@ -280,7 +320,7 @@ export default function Home() {
           <ChevronDown className="w-8 h-8 text-emerald-400" />
         </motion.div>
       </section>
-{/* ======= ABOUT SECTION ======= */}
+      {/* ======= ABOUT SECTION ======= */}
       <section className="py-24 bg-slate-900/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -293,7 +333,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               من <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">نحن</span>
             </h2>
-            <div class="mx-auto w-16 h-1 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full mb-4"></div>
+            <div className="mx-auto w-16 h-1 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full mb-4"></div>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
               نحن فريق من المبدعين والمطورين الذين يسعون لتحويل الأفكار إلى واقع رقمي استثنائي. نؤمن بأن التكنولوجيا هي المفتاح للمستقبل.
             </p>
@@ -314,7 +354,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="LAXR  text-3xl font-bold text-white mb-4">
+              <h3 className="LAXR text-3xl font-bold text-white mb-4">
                 رؤيتنا ورسالتنا
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -333,7 +373,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <section className="relative py-24 bg-gradient-to-b from-[#0a0e17] to-slate-900/50">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtMy4zMTQgMC02IDIuNjg2LTYgNnMyLjY4NiA2IDYgNiA2LTIuNjg2IDYtNi0yLjY4Ni02LTYtNnptMCAxMGMtMi4yMSAwLTQtMS43OS00LTRzMS43OS00IDQtNCA0IDEuNzkgNCA0LTEuNzkgNC00IDR6IiBmaWxsPSJyZ2JhKDE2LCAxODUsIDEyOSwgMC4wNSkiLz48L2c+PC9zdmc+')] opacity-30" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -348,7 +387,6 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-400">نقدم حلولاً متكاملة تلبي احتياجاتك بأعلى معايير الجودة</p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {features.map((feature, index) => (
               <motion.div
@@ -385,7 +423,6 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {achievements.map((achievement, index) => (
               <motion.div
@@ -411,7 +448,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <section className="relative py-24 bg-slate-900/30">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -444,7 +480,7 @@ export default function Home() {
                     className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                   />
                   <div className="relative">
-                    <div className="LAXR text-3xl md:text-6xl py-4  font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 mb-3">
+                    <div className="LAXR text-3xl md:text-6xl py-4 font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 mb-3">
                       {stat.number}
                     </div>
                     <div className="text-gray-400 text-lg font-medium">{stat.label}</div>
@@ -455,7 +491,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* ======= LATEST SERVICES SECTION ======= */}
       <section className="relative py-24 bg-gradient-to-b from-[#0a0e17] to-slate-900/50">
         <StarField />
@@ -471,7 +506,6 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-300">اكتشف أحدث ما نقدمه من حلول تقنية مبتكرة</p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {latestServices.map((service, index) => (
               <motion.div
@@ -498,7 +532,6 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -517,7 +550,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       {/* ======= LATEST PROJECTS SECTION ======= */}
       <section className="relative py-24 bg-gradient-to-b from-slate-900/50 to-[#0a0e17]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -532,43 +564,42 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-300">تعرف على أحدث إنجازاتنا في عالم التقنية</p>
           </motion.div>
-
           {loading ? (
-          <motion.div
-            variants={itemVariants}
-            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-4"
-          >
-            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-            جاري التحميل...
-          </motion.div>
+            <motion.div
+              variants={itemVariants}
+              className="text-center flex flex-col items-center gap-2 text-white text-xl mb-4"
+            >
+              <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              جاري التحميل...
+            </motion.div>
           ) : latestProjects.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {latestProjects.map((project, index) => (
                 <Link to={`/projects/${project.id}`} key={project.id} className="no-underline">
-                <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.05 }}
-                  className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/300x192?text=صورة+غير+متوفرة';
-                    }}
-                  />
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-gray-400 mb-4">{project.description}</p>
-                    <span className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium">
-                      {project.category}
-                    </span>
-                  </div>
-                </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -10, scale: 1.05 }}
+                    className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/300x192?text=صورة+غير+متوفرة';
+                      }}
+                    />
+                    <div className="p-6">
+                      <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
+                      <p className="text-gray-400 mb-4">{project.description}</p>
+                      <span className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium">
+                        {project.category}
+                      </span>
+                    </div>
+                  </motion.div>
                 </Link>
               ))}
             </div>
@@ -580,7 +611,6 @@ export default function Home() {
               لا توجد مشاريع منشورة متاحة
             </motion.div>
           )}
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -599,7 +629,110 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
+      {/* ======= FAQ SECTION ======= */}
+      <section className="relative py-24 bg-gradient-to-b from-[#0a0e17] to-slate-900/50">
+        <StarField />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              الأسئلة <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">الشائعة</span>
+            </h2>
+            <p className="text-xl text-gray-300">إجابات على أكثر الأسئلة شيوعًا حول خدماتنا</p>
+          </motion.div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 transition-all"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative">
+                  <button
+                    onClick={() => toggleFaq(index)}
+                    className="w-full flex justify-between items-center p-6 text-right"
+                  >
+                    <span className="text-xl font-bold text-white">{faq.question}</span>
+                    <motion.div
+                      animate={{ rotate: openFaq === index ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="w-6 h-6 text-emerald-400" />
+                    </motion.div>
+                  </button>
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{
+                      height: openFaq === index ? 'auto' : 0,
+                      opacity: openFaq === index ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-6 pt-0 text-gray-300 text-lg leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* ======= TESTIMONIALS SECTION ======= */}
+      <section className="relative py-24 bg-gradient-to-b from-[#0a0e17] to-slate-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              آراء <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">عملائنا</span>
+            </h2>
+            <p className="text-xl text-gray-300">تعرف على تجارب عملائنا وكيف ساعدناهم في تحقيق أهدافهم</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.05 }}
+                className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative p-8">
+                  <div className="flex items-center flex-col mb-4">
+                      <h3 className="text-xl font-bold text-white">{testimonial.name}</h3>
+                      <p className="text-gray-400 text-sm">{testimonial.role}</p>
+                  </div>
+                  <p className="text-gray-300 leading-relaxed mb-4">{testimonial.text}</p>
+                  <div className="flex justify-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-600'}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="py-24 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border-y border-emerald-500/20 relative overflow-hidden">
         <StarField />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -616,7 +749,7 @@ export default function Home() {
               <Rocket className="w-10 h-10 text-white" />
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              جاهز لبدء  <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">مشروعك</span> ؟
+              جاهز لبدء <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">مشروعك</span>؟
             </h2>
             <p className="text-xl text-gray-300 mb-8">
               دعنا نحول فكرتك إلى واقع رقمي متميز يفوق التوقعات
@@ -636,7 +769,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-            {/* Toast Notification */}
+      {/* Toast Notification */}
       {notification && (
         <motion.div
           variants={toastVariants}

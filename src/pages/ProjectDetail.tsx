@@ -14,6 +14,13 @@ const iconMap = {
   Globe,
 };
 
+// قاموس لترجمة مفاتيح الإحصائيات إلى العربية
+const statsTranslation = {
+  users: 'عدد المستخدمين',
+  rating: 'التقييم',
+  transactions: 'المعاملات',
+};
+
 export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -36,6 +43,7 @@ export default function ProjectDetail() {
       transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
+
   useEffect(() => {
     if (project && project.title) {
       document.title = `يسِّرها - ${project.title}`;
@@ -43,6 +51,7 @@ export default function ProjectDetail() {
       document.title = 'يسِّرها';
     }
   }, [project]);
+
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -194,32 +203,27 @@ export default function ProjectDetail() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div variants={itemVariants} className="relative group">
               <div className={`relative group rounded-3xl overflow-hidden border-2 border-white/20 ${project.gradient}`}>
-  <img
-    src={project.image || 'https://via.placeholder.com/800x600'}
-    alt={project.title}
-    className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
-    loading="lazy"
-  />
-
-  {/* overlay للتعتيم — pointer-events-none حتى لا يقطع الهوف */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none z-10" />
-
-  {/* النص — pointer-events-none حتى لا يمنع الهوف، أعلى z-index */}
-  <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 pointer-events-none z-20">
-    <h3 className="LAXR text-2xl font-bold text-white mb-2">{project.title}</h3>
-    <div className="flex items-center gap-4 text-emerald-400">
-      <Eye className="w-5 h-5" />
-      <span className="GraphicSchool bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-        متع نظرك
-      </span>
-    </div>
-  </div>
-</div>
-
+                <img
+                  src={project.image || 'https://via.placeholder.com/800x600'}
+                  alt={project.title}
+                  className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none z-10" />
+                <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 pointer-events-none z-20">
+                  <h3 className="LAXR text-2xl font-bold text-white mb-2">{project.title}</h3>
+                  <div className="flex items-center gap-4 text-emerald-400">
+                    <Eye className="w-5 h-5" />
+                    <span className="GraphicSchool bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                      متع نظرك
+                    </span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-6">
-              <div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br `}>
+              <div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br`}>
                 <IconComponent className="w-12 h-12 text-white mb-4" />
                 <h3 className="text-2xl font-bold text-white mb-2">{project.category}</h3>
                 <p className="text-gray-300">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
@@ -234,7 +238,7 @@ export default function ProjectDetail() {
                       className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
                     >
                       <div className="text-2xl font-bold text-emerald-400 mb-1">{value || 'غير متوفر'}</div>
-                      <div className="text-gray-400 text-sm capitalize">{key}</div>
+                      <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
                     </motion.div>
                   ))}
               </div>

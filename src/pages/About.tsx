@@ -55,6 +55,14 @@ export default function About() {
       color: '#f59e0b'
     },
     {
+      name: ' محمد محمود ',
+      role: ' مطور وجهات خلفيه',
+      specialty: ' قواعد البيانات',
+      years: 7,
+      social: Linkedin,
+      color: '#14b8a6'
+    },
+    {
       name: ' أحمد أمين',
       role: 'مصمم UI/UX',
       specialty: 'تجربة المستخدم',
