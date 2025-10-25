@@ -1,27 +1,32 @@
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Eye, Download, X, Check, Star, Info, MessageSquare } from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 
 // ReviewForm component for adding and editing reviews
-function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, editingReview, setEditingReview }) {
+function ReviewForm(props: any) {
+  const { projectId, onAddReview, onUpdateReview, isAddingReview, setIsAddingReview, editingReview, setEditingReview } = props;
   const [newReview, setNewReview] = useState(editingReview || { text: '', name: '', rating: 5 });
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
 
-  const showNotification = (message, type) => {
+  const showNotification = (message: string, type: 'success' | 'error' | 'info' | string) => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 5000);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: any) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
     console.log('Form submission triggered for review:', newReview, 'projectId:', projectId);
+
+    // show loading state in parent when available
+    if (typeof setIsAddingReview === 'function') setIsAddingReview(true);
 
     if (!projectId) {
       console.error('No projectId provided');
       showNotification('لا يوجد مشروع محدد لإضافة الرأي', 'error');
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
       return;
     }
 
@@ -30,17 +35,27 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
     if (!session) {
       console.error('No session found');
       showNotification('يجب تسجيل الدخول لإضافة رأي', 'error');
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
+      return;
+    }
+    const userId = session.user?.id;
+    if (!userId) {
+      console.error('No user id in session');
+      showNotification('خطأ في الجلسة: معرف المستخدم غير موجود', 'error');
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
       return;
     }
 
     if (!newReview.name || !newReview.text) {
       console.error('Missing required fields:', { name: newReview.name, text: newReview.text });
       showNotification('يرجى ملء جميع حقول الرأي', 'error');
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
       return;
     }
     if (newReview.rating < 1 || newReview.rating > 5) {
       console.error('Invalid rating:', newReview.rating);
       showNotification('التقييم يجب أن يكون بين 1 و5', 'error');
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
       return;
     }
 
@@ -63,7 +78,10 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
           throw new Error(error.message);
         }
         console.log('Review updated successfully:', data);
-        onUpdateReview(data[0]);
+        // ensure project_id exists on updated review before passing up
+        const updated = { ...(data && data[0]) };
+        if (updated && !updated.project_id) updated.project_id = projectId;
+        onUpdateReview(updated);
         setNewReview({ text: '', name: '', rating: 5 });
         setEditingReview(null);
         showNotification('تم تحديث الرأي بنجاح', 'success');
@@ -79,6 +97,7 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
           .from('reviews')
           .insert({
             project_id: projectId,
+            user_id: userId,
             text: newReview.text,
             name: newReview.name,
             rating: parseInt(newReview.rating),
@@ -90,19 +109,26 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
           throw new Error(error.message);
         }
         console.log('Review added successfully:', data);
-        onAddReview(data[0]);
+        // ensure project_id exists on inserted review before passing up
+        const inserted = { ...(data && data[0]) };
+        if (inserted && !inserted.project_id) inserted.project_id = projectId;
+        onAddReview(inserted);
         setNewReview({ text: '', name: '', rating: 5 });
         showNotification('تم إضافة الرأي بنجاح', 'success');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error in handleSubmit:', err);
-      showNotification(`خطأ في ${editingReview ? 'تحديث' : 'إضافة'} الرأي: ${err.message}`, 'error');
+      showNotification(`خطأ في ${editingReview ? 'تحديث' : 'إضافة'} الرأي: ${err.message || err}`, 'error');
+    }
+    finally {
+      if (typeof setIsAddingReview === 'function') setIsAddingReview(false);
     }
   };
 
   return (
     <div className="space-y-4 bg-slate-800/30 p-6 rounded-xl border border-emerald-500/30">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Use a div instead of nested form to avoid submitting the parent project form (prevents page refresh) */}
+  <div className="space-y-4" onKeyDown={(e: any) => { if (e.key === 'Enter') e.preventDefault(); }}>
         <input
           placeholder="اسم العميل"
           className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
@@ -130,7 +156,8 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
         <div className="flex gap-4">
           <motion.button
             whileHover={{ scale: 1.05 }}
-            type="submit"
+            type="button"
+            onClick={(e: any) => handleSubmit(e)}
             disabled={isAddingReview || !projectId}
             className={`flex-1 p-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 ${
               isAddingReview || !projectId ? 'opacity-50 cursor-not-allowed' : ''
@@ -156,7 +183,7 @@ function ReviewForm({ projectId, onAddReview, onUpdateReview, isAddingReview, ed
             إلغاء
           </motion.button>
         </div>
-      </form>
+      </div>
       {notification && (
         <motion.div
           initial={{ opacity: 0, y: -50 }}
@@ -216,7 +243,7 @@ export default function AdminProjects() {
   const [showForm, setShowForm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
   const [imageFile, setImageFile] = useState(null);
   const [screenshotFiles, setScreenshotFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
@@ -1077,6 +1104,7 @@ export default function AdminProjects() {
                       onAddReview={handleAddReview}
                       onUpdateReview={handleUpdateReview}
                       isAddingReview={isAddingReview}
+                      setIsAddingReview={setIsAddingReview}
                       editingReview={editingReview}
                       setEditingReview={setEditingReview}
                     />
