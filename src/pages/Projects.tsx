@@ -235,17 +235,17 @@ export default function Projects() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`flex items-center mb-16 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                className={`flex items-center flex-col mb-12 md:mb-16 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} `}
               >
                 {/* النصف الأيسر/الأيمن */}
-                <div className="w-1/2 px-8">
+                <div className="w-full md:w-1/2 px-4 md:px-8 mb-6 md:mb-0">
                   <motion.div
                     whileHover={{
                       scale: 1.05,
                       boxShadow: `0 0 25px ${step.color}80`,
                       borderColor: `${step.color}80`,
                     }}
-                    className="relative p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+                    className="relative p-6 md:p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
                     style={{ background: `linear-gradient(135deg, ${step.color}20, transparent)` }}
                   >
                     {/* تأثير خلفية متوهجة */}

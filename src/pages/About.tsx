@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useAnimation, useInView } from 'framer-motion';
 import {
   Users,
   Star,
@@ -23,13 +23,48 @@ import {
   Eye,
   Flag,
   Medal,
+  CheckCircle, // Added CheckCircle icon
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import StarField from '../components/StarField';
 
 export default function About() {
-  // متغيرات الحركة
+  // Animation variants for the new section
+  const contentVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
+  // References and animation controls for the new section
+  const contentRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentControls = useAnimation();
+  const imageControls = useAnimation();
+
+  // UseInView to trigger animations when in view
+  const contentInView = useInView(contentRef, { once: true });
+  const imageInView = useInView(imageRef, { once: true });
+
+  useEffect(() => {
+    if (contentInView) contentControls.start('visible');
+    if (imageInView) imageControls.start('visible');
+  }, [contentInView, imageInView, contentControls, imageControls]);
+  // Achievements data
+  const achievements = [
+    'خبرة تزيد عن 10 سنوات في التصميم الإبداعي',
+    'إتمام 100+ مشروع بنجاح عالمي',
+    'حائزون على جوائز دولية للابتكار',
+    'فريق متخصص يحول الأحلام إلى واقع',
+  ];
+
+
+  // Existing variants and data (unchanged)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,7 +85,6 @@ export default function About() {
     },
   };
 
-  // تأثير الكتابة الآلية للنبذة
   const typingVariants = {
     hidden: { width: 0 },
     visible: {
@@ -62,7 +96,6 @@ export default function About() {
     },
   };
 
-  // بيانات أعضاء الفريق
   const teamMembers = [
     {
       name: 'أبوبكر حسن',
@@ -106,7 +139,6 @@ export default function About() {
     },
   ];
 
-  // بيانات الرحلة مع أيقونات مخصصة
   const journey = [
     { year: '2018', event: 'التأسيس', desc: '3 أعضاء بحلم كبير', color: '#10b981', icon: Rocket },
     { year: '2020', event: '100 مشروع', desc: 'نمو سريع', color: '#06b6d4', icon: UsersIcon },
@@ -114,7 +146,6 @@ export default function About() {
     { year: '2024', event: '500+ عميل', desc: 'توسع إقليمي', color: '#8b5cf6', icon: Globe },
   ];
 
-  // بيانات القيم
   const values = [
     { icon: Target, title: 'التميز', desc: 'أفضل جودة', color: '#10b981' },
     { icon: Zap, title: 'السرعة', desc: 'حلول فورية', color: '#06b6d4' },
@@ -122,11 +153,10 @@ export default function About() {
     { icon: Users, title: 'الشراكة', desc: 'نجاح مشترك', color: '#f59e0b' },
   ];
 
-    const balls = [
-    { icon: Zap, title: 'التحول الرقمي', description:'رحلة كاملة لنجاحك', color: '#06b6d4' },
+  const balls = [
+    { icon: Zap, title: 'التحول الرقمي', description: 'رحلة كاملة لنجاحك', color: '#06b6d4' },
   ];
 
-  // تحديث عنوان الصفحة
   useEffect(() => {
     document.title = 'يسِّرها - من نحن';
   }, []);
@@ -201,132 +231,206 @@ export default function About() {
             <span className="text-purple-400">إبداع</span> لا حدود له
           </motion.p>
         </motion.div>
-              
-        {/* ======= JOURNEY TIMELINE ======= */}
+
+ {/* ======= MAIN CONTENT SECTION ======= */}
         <motion.section
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mb-24 relative"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-24"
         >
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              رحلتنا{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                الساحرة
+          <motion.div
+            ref={contentRef}
+            variants={contentVariants}
+            initial="hidden"
+            animate={contentControls}
+          >
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-100 to-cyan-100 dark:from-emerald-900/30 dark:to-cyan-900/30 rounded-full px-6 py-3 mb-6">
+              <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                من نحن
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              نسج قصصكم بـ
+              <span className="block bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent py-2">
+                التصميم والإبداع
               </span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              انضم إلينا في رحلة الإبداع والابتكار عبر السنين
+            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+              في يسِّرها، نحن فريق شغوف يحول الأفكار إلى واقع مبهر. نصمم مساحات
+              تجمع بين الأناقة والابتكار، لنروي قصة كل مساحة بأسلوب فريد.
             </p>
+            <p className="text-base text-gray-400 mb-6 leading-relaxed">
+              باستخدام أحدث التقنيات ولمسة إبداعية، نحن هنا لنصنع تجارب بصرية
+              تعكس رؤيتكم، سواء لمنزل أحلامكم، مكتب عملي، أو مشروع تجاري يلفت
+              الأنظار.
+            </p>
+            <div className="space-y-3 mb-6">
+              {achievements.map((achievement, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">{achievement}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-row gap-4">
+              <a href="#team">
+                <button className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:scale-105 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-lg">
+                  اكتشف فريقنا
+                </button>
+              </a>
+              <a href="#journey">
+                <button className="bg-white/10 backdrop-blur-sm text-gray-300 px-6 py-3 rounded-xl hover:bg-white/20 transition-all duration-300 shadow-lg">
+                  رحلتنا
+                </button>
+              </a>
+            </div>
           </motion.div>
-          <div className="relative max-w-6xl mx-auto">
-                      <motion.div 
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        className="relative"
-                      >
-                        {balls.map((ball, index) => (
-                          <motion.div
-                            key={index}
-                            variants={itemVariants}
-                            style={{
-                              transform: `rotate(${index * 30}deg) translateY(-220px) rotate(${-index * 30}deg)`
-                            }}
-                            className="absolute top-1/2 left-1/2 w-80 h-80 "
-                          >
-                            <motion.div
-                              whileHover={{ scale: 1.15, y: -15 }}
-                              className="w-48 h-48 rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center text-center p-6 shadow-2xl"
-                              style={{ backgroundColor: `${ball.color}20` }}
-                            >
-                              <motion.div 
-                                animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="w-16 h-16 bg-gradient-to-br from-white to-transparent rounded-full flex items-center justify-center mb-4 shadow-lg"
-                                style={{ backgroundColor: ball.color }}
-                              >
-                                <ball.icon className="w-8 h-8 text-white" />
-                              </motion.div>
-                              <h3 className="text-lg font-bold text-white mb-2">{ball.title}</h3>
-                              <p className="text-xs text-gray-300">{ball.description}</p>
-                            </motion.div>
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    </div>
+          <motion.div
+            ref={imageRef}
+            variants={imageVariants}
+            initial="hidden"
+            animate={imageControls}
+            className="relative"
+          >
+            <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src="/about.png"
+                alt="فريق العمل"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-3xl blur-2xl opacity-60 animate-pulse"></div>
+            <div
+              className="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-3xl blur-2xl opacity-50 animate-pulse"
+              style={{ animationDelay: '1s' }}
+            ></div>
+          </motion.div>
+        </motion.section>
+{/* ======= JOURNEY TIMELINE ======= */}
+<motion.section
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  className="mb-24 relative"
+  id="journey"
+>
+  <motion.div variants={itemVariants} className="text-center mb-12">
+    <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+      رحلتنا{' '}
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+        الساحرة
+      </span>
+    </h2>
+    <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
+      انضم إلينا في رحلة الإبداع والابتكار عبر السنين
+    </p>
+  </motion.div>
 
-          <div className="relative max-w-4xl mx-auto">
-            {/* الخط العمودي الرابط مع توهج */}
+  {/* Balls Section */}
+  <div className="relative max-w-6xl mx-auto hidden md:block">
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+      className="relative"
+    >
+      {balls.map((ball, index) => (
+        <motion.div
+          key={index}
+          variants={itemVariants}
+          style={{
+            transform: `rotate(${index * 30}deg) translateY(-220px) rotate(${-index * 30}deg)`,
+          }}
+          className="absolute top-1/2 left-1/2 w-80 h-80"
+        >
+          <motion.div
+            whileHover={{ scale: 1.15, y: -15 }}
+            className="w-48 h-48 rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center text-center p-6 shadow-2xl"
+            style={{ backgroundColor: `${ball.color}20` }}
+          >
             <motion.div
-              className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full"
-              style={{ background: 'linear-gradient(to bottom, #10b981, #06b6d4, #8b5cf6)' }}
-              animate={{
-                boxShadow: [
-                  '0 0 10px rgba(16, 185, 129, 0.5)',
-                  '0 0 20px rgba(6, 182, 212, 0.7)',
-                  '0 0 10px rgba(139, 92, 246, 0.5)',
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            />
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-16 h-16 bg-gradient-to-br from-white to-transparent rounded-full flex items-center justify-center mb-4 shadow-lg"
+              style={{ backgroundColor: ball.color }}
+            >
+              <ball.icon className="w-8 h-8 text-white" />
+            </motion.div>
+            <h3 className="text-lg font-bold text-white mb-2">{ball.title}</h3>
+            <p className="text-xs text-gray-300">{ball.description}</p>
+          </motion.div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
 
-            {journey.map((step, index) => (
+  {/* Timeline Section */}
+  <div className="relative max-w-4xl mx-auto">
+    <motion.div
+      className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full"
+      style={{ background: 'linear-gradient(to bottom, #10b981, #06b6d4, #8b5cf6)' }}
+      animate={{
+        boxShadow: [
+          '0 0 10px rgba(16, 185, 129, 0.5)',
+          '0 0 20px rgba(6, 182, 212, 0.7)',
+          '0 0 10px rgba(139, 92, 246, 0.5)',
+        ],
+      }}
+      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+    />
+
+    {journey.map((step, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`flex items-center mb-16 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                className={`flex items-center flex-col mb-12 md:mb-16 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} `}
               >
-                {/* النصف الأيسر/الأيمن */}
-                <div className="w-1/2 px-8">
-                  <motion.div
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: `0 0 25px ${step.color}80`,
-                      borderColor: `${step.color}80`,
-                    }}
-                    className="relative p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
-                    style={{ background: `linear-gradient(135deg, ${step.color}20, transparent)` }}
-                  >
-                    {/* تأثير خلفية متوهجة */}
-                    <motion.div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-20"
-                      style={{ background: `radial-gradient(circle at center, ${step.color}, transparent)` }}
-                      animate={{ opacity: [0, 0.2, 0] }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                    />
-                    <h3 className="text-2xl font-bold text-white mb-3">{step.year}</h3>
-                    <p className="text-xl font-semibold text-gray-200 mb-2">{step.event}</p>
-                    <p className="text-sm text-gray-300">{step.desc}</p>
-                  </motion.div>
-                </div>
+        <div className="w-full md:w-1/2 px-4 md:px-8 mb-6 md:mb-0">
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+              boxShadow: `0 0 25px ${step.color}80`,
+              borderColor: `${step.color}80`,
+            }}
+            className="relative p-6 md:p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+            style={{ background: `linear-gradient(135deg, ${step.color}20, transparent)` }}
+          >
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-20"
+              style={{ background: `radial-gradient(circle at center, ${step.color}, transparent)` }}
+              animate={{ opacity: [0, 0.2, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{step.year}</h3>
+            <p className="text-lg md:text-xl font-semibold text-gray-200 mb-2">{step.event}</p>
+            <p className="text-sm text-gray-300">{step.desc}</p>
+          </motion.div>
+        </div>
 
-                {/* النقطة الزمنية */}
-                <motion.div
-                  className="w-16 h-16 rounded-full flex items-center justify-center z-10 mx-6 relative"
-                  style={{ background: `linear-gradient(135deg, ${step.color}, ${step.color}80)` }}
-                  animate={{ scale: [1, 1.15, 1], rotate: [0, 360] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  whileHover={{ scale: 1.2, boxShadow: `0 0 30px ${step.color}cc` }}
-                >
-                  <step.icon className="w-8 h-8 text-white" />
-                  {/* هالة متوهجة حول النقطة */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full"
-                    style={{ boxShadow: `0 0 20px ${step.color}80` }}
-                    animate={{ scale: [1, 1.3, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.div>
+        <motion.div
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center z-10 mx-4 md:mx-6 relative"
+          style={{ background: `linear-gradient(135deg, ${step.color}, ${step.color}80)` }}
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          whileHover={{ scale: 1.2, boxShadow: `0 0 30px ${step.color}cc` }}
+        >
+          <step.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+          <motion.div
+            className="absolute inset-0 rounded-full"
+            style={{ boxShadow: `0 0 20px ${step.color}80` }}
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </motion.div>
 
-                {/* النصف الآخر فارغ */}
-                <div className="w-1/2" />
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
+        <div className="hidden md:block w-1/2" />
+      </motion.div>
+    ))}
+  </div>
+</motion.section>
         {/* ======= TEAM GALAXY ======= */}
         <motion.section
           variants={containerVariants}
@@ -334,6 +438,7 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true }}
           className="mb-24"
+          id='team'
         >
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">
@@ -485,7 +590,6 @@ export default function About() {
             </Link>
           </motion.div>
 
-          {/* Contact Orbit */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

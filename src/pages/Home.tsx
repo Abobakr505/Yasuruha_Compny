@@ -199,7 +199,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.1),transparent_50%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 relative z-10 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:pt-6 pb-[6rem] lg:py-8 relative z-10 ">
           <div className="grid lg:grid-cols-2 gap-12 items-center ">
             <div className="text-center lg:text-right">
               <motion.div
@@ -312,16 +312,22 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+        <a href="#about" >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block "
+          className="absolute bottom-8 left-1/2 -translate-x-1/2  lg:block "
         >
-          <ChevronDown className="w-8 h-8 text-emerald-400" />
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center relative">
+          <div className="w-1 h-3 bg-gradient-to-b from-cyan-500 to-emerald-400 rounded-full mt-2 animate-pulse">
+            </div>
+            <div className="absolute -bottom-6 text-white/60 text-xs whitespace-nowrap">اكتشف المزيد</div>
+            </div>
         </motion.div>
+        </a>
       </section>
       {/* ======= ABOUT SECTION ======= */}
-      <section className="py-24 bg-slate-900/50 relative overflow-hidden">
+      <section id='about' className="py-24 bg-slate-900/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div
