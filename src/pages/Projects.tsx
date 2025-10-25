@@ -1,5 +1,24 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Users, TrendingUp, Award, X } from 'lucide-react';
+import {
+  ExternalLink,
+  Code,
+  Smartphone,
+  Globe,
+  ShoppingCart,
+  Heart,
+  Building2,
+  Sparkles,
+  ChevronRight,
+  Users,
+  TrendingUp,
+  Award,
+  X,
+  Brain,
+  PenTool,
+  Code as CodeIcon,
+  CheckCircle,
+  Rocket,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
@@ -11,7 +30,7 @@ const iconMap = {
   Building2,
   Code,
   Smartphone,
-  Globe
+  Globe,
 };
 
 export default function Projects() {
@@ -25,9 +44,9 @@ export default function Projects() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
+        delayChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
@@ -35,15 +54,49 @@ export default function Projects() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
+      transition: { duration: 0.6, ease: 'easeOut' },
+    },
   };
 
   const toastVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -50 }
+    exit: { opacity: 0, y: -50 },
   };
+
+  // بيانات خطوات بناء المشاريع
+  const projectSteps = [
+    {
+      step: 'التخطيط',
+      desc: 'تحليل الاحتياجات ووضع الخطة الاستراتيجية',
+      color: '#10b981',
+      icon: Brain,
+    },
+    {
+      step: 'التصميم',
+      desc: 'تصميم واجهات مستخدم جذابة وتجربة مستخدم مثالية',
+      color: '#06b6d4',
+      icon: PenTool,
+    },
+    {
+      step: 'التطوير',
+      desc: 'بناء الحلول التقنية باستخدام أحدث التقنيات',
+      color: '#f59e0b',
+      icon: CodeIcon,
+    },
+    {
+      step: 'الاختبار',
+      desc: 'اختبارات شاملة لضمان الأداء والجودة',
+      color: '#14b8a6',
+      icon: CheckCircle,
+    },
+    {
+      step: 'الإطلاق',
+      desc: 'إطلاق المشروع مع دعم مستمر',
+      color: '#8b5cf6',
+      icon: Rocket,
+    },
+  ];
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -64,7 +117,7 @@ export default function Projects() {
       }
       setLoading(false);
     };
-    document.title = "يسِّرها - المشاريع  ";
+    document.title = 'يسِّرها - المشاريع';
     fetchProjects();
   }, []);
 
@@ -85,8 +138,8 @@ export default function Projects() {
             background: [
               'radial-gradient(circle at 20% 80%, rgba(16,185,129,0.3), transparent 50%)',
               'radial-gradient(circle at 80% 20%, rgba(6,182,212,0.3), transparent 50%)',
-              'radial-gradient(circle at 50% 50%, rgba(16,185,129,0.3), transparent 50%)'
-            ]
+              'radial-gradient(circle at 50% 50%, rgba(16,185,129,0.3), transparent 50%)',
+            ],
           }}
           transition={{ duration: 8, repeat: Infinity }}
         />
@@ -104,11 +157,14 @@ export default function Projects() {
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring" }}
+              transition={{ delay: 0.3, type: 'spring' }}
               className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-sm font-medium mb-8 shadow-2xl"
             >
               <Sparkles className="w-5 h-5" />
-              <motion.div animate={{ textShadow: ['0 0 10px #10b981', '0 0 20px #10b981'] }} transition={{ duration: 2, repeat: Infinity }}>
+              <motion.div
+                animate={{ textShadow: ['0 0 10px #10b981', '0 0 20px #10b981'] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
                 أعمالنا المميزة
               </motion.div>
             </motion.span>
@@ -121,7 +177,7 @@ export default function Projects() {
             <motion.span
               animate={{
                 backgroundPosition: ['0% 50%', '200% 50%', '0% 50%'],
-                color: ['#ffffff', '#10b981', '#06b6d4']
+                color: ['#ffffff', '#10b981', '#06b6d4'],
               }}
               transition={{ duration: 6, repeat: Infinity }}
               className="GraphicSchool bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent"
@@ -135,15 +191,105 @@ export default function Projects() {
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
             بعض <span className="text-emerald-400 font-bold">مشاريعنا الناجحة</span>، نصنع{' '}
-            <span className="text-cyan-400">نجاحك</span> بـ <span className="text-purple-400">إبداع</span> لا حدود له
+            <span className="text-cyan-400">نجاحك</span> بـ{' '}
+            <span className="text-purple-400">إبداع</span> لا حدود له
           </motion.p>
         </motion.div>
+
+        {/* Project Building Steps Timeline */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-24 relative"
+        >
+          <motion.div variants={itemVariants} className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              خطوات بناء{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                مشاريعنا
+              </span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              عملية منظمة لتحويل أفكارك إلى واقع رقمي مذهل
+            </p>
+          </motion.div>
+
+          <div className="relative max-w-4xl mx-auto">
+            {/* الخط العمودي الرابط مع توهج */}
+            <motion.div
+              className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full"
+              style={{ background: 'linear-gradient(to bottom, #10b981, #06b6d4, #8b5cf6)' }}
+              animate={{
+                boxShadow: [
+                  '0 0 10px rgba(16, 185, 129, 0.5)',
+                  '0 0 20px rgba(6, 182, 212, 0.7)',
+                  '0 0 10px rgba(139, 92, 246, 0.5)',
+                ],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            {projectSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className={`flex items-center mb-16 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+              >
+                {/* النصف الأيسر/الأيمن */}
+                <div className="w-1/2 px-8">
+                  <motion.div
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: `0 0 25px ${step.color}80`,
+                      borderColor: `${step.color}80`,
+                    }}
+                    className="relative p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+                    style={{ background: `linear-gradient(135deg, ${step.color}20, transparent)` }}
+                  >
+                    {/* تأثير خلفية متوهجة */}
+                    <motion.div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-20"
+                      style={{ background: `radial-gradient(circle at center, ${step.color}, transparent)` }}
+                      animate={{ opacity: [0, 0.2, 0] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <h3 className="text-2xl font-bold text-white mb-3">{step.step}</h3>
+                    <p className="text-sm text-gray-300">{step.desc}</p>
+                  </motion.div>
+                </div>
+
+                {/* النقطة الزمنية */}
+                <motion.div
+                  className="w-16 h-16 rounded-full flex items-center justify-center z-10 mx-6 relative"
+                  style={{ background: `linear-gradient(135deg, ${step.color}, ${step.color}80)` }}
+                  animate={{ scale: [1, 1.15, 1], rotate: [0, 360] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.2, boxShadow: `0 0 30px ${step.color}cc` }}
+                >
+                  <step.icon className="w-8 h-8 text-white" />
+                  {/* هالة متوهجة حول النقطة */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full"
+                    style={{ boxShadow: `0 0 20px ${step.color}80` }}
+                    animate={{ scale: [1, 1.3, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.div>
+
+                {/* النصف الآخر فارغ */}
+                <div className="w-1/2" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Loading State */}
         {loading && (
           <motion.div
             variants={itemVariants}
-            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-8 "
+            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-8"
           >
             <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
             جاري التحميل...
@@ -152,17 +298,26 @@ export default function Projects() {
 
         {/* Projects Carousel */}
         {!loading && projects.length > 0 && (
-          <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-24"
+          >
             <motion.div variants={itemVariants} className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-white">
-                عالم <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">مشاريعنا</span>
+                عالم{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                  مشاريعنا
+                </span>
               </h2>
             </motion.div>
 
             <div className="relative max-w-6xl mx-auto">
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
                 className="relative"
               >
                 {projects.map((project, index) => {
@@ -172,7 +327,9 @@ export default function Projects() {
                       key={project.id}
                       variants={itemVariants}
                       style={{
-                        transform: `rotate(${index * (360 / projects.length)}deg) translateY(-250px) rotate(-${index * (360 / projects.length)}deg)`
+                        transform: `rotate(${index * (360 / projects.length)}deg) translateY(-250px) rotate(-${
+                          index * (360 / projects.length)
+                        }deg)`,
                       }}
                       className="absolute top-1/2 left-1/2 w-96 h-96"
                     >
@@ -202,7 +359,13 @@ export default function Projects() {
 
         {/* Projects Grid */}
         {!loading && projects.length > 0 && (
-          <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-24"
+          >
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => {
                 const IconComponent = iconMap[project.icon_name] || Code;
@@ -213,7 +376,7 @@ export default function Projects() {
                     whileHover={{
                       scale: 1.05,
                       rotateY: 10,
-                      y: -20
+                      y: -20,
                     }}
                     className="group relative"
                   >
@@ -279,10 +442,7 @@ export default function Projects() {
                         </div>
                       </motion.div>
                     </div>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className="mt-4 flex justify-center"
-                    >
+                    <motion.div whileHover={{ scale: 1.05 }} className="mt-4 flex justify-center">
                       <Link to={`/projects/${project.id}`}>
                         <motion.button
                           whileHover={{ scale: 1.1 }}
@@ -303,10 +463,7 @@ export default function Projects() {
 
         {/* Empty State */}
         {!loading && projects.length === 0 && (
-          <motion.div
-            variants={itemVariants}
-            className="text-center text-white text-xl"
-          >
+          <motion.div variants={itemVariants} className="text-center text-white text-xl">
             لا توجد مشاريع منشورة متاحة
           </motion.div>
         )}
@@ -331,12 +488,13 @@ export default function Projects() {
               variants={itemVariants}
               className="text-5xl md:text-6xl font-bold text-white mb-6"
             >
-              جاهز للسحر <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">الرقمي</span>؟
+              جاهز للسحر{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                الرقمي
+              </span>
+              ؟
             </motion.h2>
-            <motion.p
-              variants={itemVariants}
-              className="text-xl text-gray-300 mb-12"
-            >
+            <motion.p variants={itemVariants} className="text-xl text-gray-300 mb-12">
               انضم إلى رحلتنا واصنع معنا <span className="text-emerald-400">قصة نجاح</span> مذهلة
             </motion.p>
             <Link to="/contact">
@@ -365,7 +523,7 @@ export default function Projects() {
             {[
               { icon: Users, text: '500+ عميل', color: '#10b981' },
               { icon: TrendingUp, text: '95% نجاح', color: '#06b6d4' },
-              { icon: Award, text: 'جوائز دولية', color: '#f59e0b' }
+              { icon: Award, text: 'جوائز دولية', color: '#f59e0b' },
             ].map((item, index) => (
               <motion.div
                 variants={itemVariants}
@@ -378,7 +536,7 @@ export default function Projects() {
                   className="w-12 h-12 mx-auto mb-4 rounded-full flex justify-center"
                   style={{ backgroundColor: item.color + '40' }}
                 >
-                  <item.icon className={`w-6 h-6 text-white mx-auto mt-3`} />
+                  <item.icon className="w-6 h-6 text-white mx-auto mt-3" />
                 </motion.div>
                 <p className="text-white font-semibold">{item.text}</p>
               </motion.div>
@@ -394,9 +552,11 @@ export default function Projects() {
             animate="visible"
             exit="exit"
             className={`fixed top-4 right-4 p-4 rounded-xl text-white flex items-center gap-2 shadow-lg ${
-              notification.type === 'success' ? 'bg-green-500/80' :
-              notification.type === 'error' ? 'bg-red-500/80' :
-              'bg-blue-500/80'
+              notification.type === 'success'
+                ? 'bg-green-500/80'
+                : notification.type === 'error'
+                ? 'bg-red-500/80'
+                : 'bg-blue-500/80'
             }`}
           >
             <X size={20} />
