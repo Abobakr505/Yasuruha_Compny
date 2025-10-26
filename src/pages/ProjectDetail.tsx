@@ -21,6 +21,13 @@ const statsTranslation = {
   transactions: 'المعاملات',
 };
 
+// أيقونات الإحصائيات السريعة
+const statsIconMap = {
+  users: Users,
+  rating: Star,
+  transactions: ShoppingCart,
+};
+
 export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -223,24 +230,53 @@ export default function ProjectDetail() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-6">
-              <div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br`}>
-                <IconComponent className="w-12 h-12 text-white mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">{project.category}</h3>
-                <p className="text-gray-300">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
-              </div>
+              {/* Main card: icon + title + long description + tags */}
+              <motion.div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br flex flex-col sm:flex-row gap-6 items-start`} whileHover={{ scale: 1.05 }}>
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
+                    <IconComponent className="w-8 h-8 text-white" />
+                  </div>
+                </div>
 
-              <div className="grid grid-cols-2 gap-4">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-white mb-2">{project.category}</h3>
+                  <p className="text-gray-300 leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
+
+                  {project.tags?.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.map((tag: string, i: number) => (
+                        <span
+                          key={i}
+                          className="text-xs font-semibold text-white/90 bg-white/5 px-3 py-1 rounded-full border border-white/10"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Stats grid: responsive and with icons */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {project.stats &&
-                  Object.entries(project.stats).map(([key, value], index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
-                    >
-                      <div className="text-2xl font-bold text-emerald-400 mb-1">{value || 'غير متوفر'}</div>
-                      <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
-                    </motion.div>
-                  ))}
+                  Object.entries(project.stats).map(([key, value]) => {
+                    const StatIcon = statsIconMap[key] || Star;
+                    return (
+                      <motion.div
+                        key={key}
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.05 }}
+                        className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center flex flex-col items-center justify-center"
+                      >
+                        <div className={`w-10 h-10 mb-3 rounded-full ${project.gradient} bg-gradient-to-br flex items-center justify-center`}>
+                          <StatIcon className="w-5 h-5 text-white" />
+                        </div>
+                        <div className={`text-2xl sm:text-3xl font-bold  ${project.gradient} bg-gradient-to-br bg-clip-text text-transparent mb-1`}>{value || '—'}</div>
+                        <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
+                      </motion.div>
+                    );
+                  })}
               </div>
 
               <div className="flex gap-4 pt-4">
