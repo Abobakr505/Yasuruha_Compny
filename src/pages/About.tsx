@@ -307,6 +307,23 @@ export default function About() {
               className="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-3xl blur-2xl opacity-50 animate-pulse"
               style={{ animationDelay: '1s' }}
             ></div>
+            {/* Floating stats */}
+            <div className="absolute top-8 left-8 glass-effect rounded-2xl p-4 shadow-xl">
+              <div className="text-2xl font-bold bg-cyan-400 bg-clip-text text-transparent">700+</div>
+              <div className="text-sm text-white ">مشروع</div>
+            </div>
+
+            <div className="absolute bottom-8 right-8 glass-effect rounded-2xl p-4 shadow-xl">
+              <div className="flex items-center space-x-1 mb-1 gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.2 + i * 0.1 }} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                ))}
+              </div>
+              <div className="text-sm text-white ">تقييم العملاء</div>
+            </div>
           </motion.div>
         </motion.section>
 {/* ======= JOURNEY TIMELINE ======= */}

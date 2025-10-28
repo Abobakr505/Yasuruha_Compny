@@ -290,10 +290,7 @@ export default function Home() {
                 <div className="flex justify-center lg:justify-start gap-1">
                   {[...Array(5)].map((_, i) => (
                     <motion.span
-                      key={i}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 1.2 + i * 0.1 }}
+animate-pulse
                       className="text-xl"
                     >
                       <Star key={i} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
