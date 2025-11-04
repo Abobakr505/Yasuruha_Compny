@@ -113,8 +113,8 @@ export default function About() {
       social: Twitter,
       color: '#06b6d4',
     },
-    {
-      name: 'محمد عبدالرحيم',
+    {      
+      name: 'محمد محمود',
       role: 'مطور واجهات أمامية',
       specialty: 'تجربة المستخدم',
       years: 7,
@@ -122,7 +122,7 @@ export default function About() {
       color: '#f59e0b',
     },
     {
-      name: 'محمد محمود',
+      name: 'محمد عبدالرحيم',
       role: 'مطور واجهات خلفية',
       specialty: 'قواعد البيانات',
       years: 7,
