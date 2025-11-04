@@ -290,7 +290,6 @@ export default function Home() {
                 <div className="flex justify-center lg:justify-start gap-1">
                   {[...Array(5)].map((_, i) => (
                     <motion.span
-animate-pulse
                       className="text-xl"
                     >
                       <Star key={i} className="w-4 h-4 text-yellow-400 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
