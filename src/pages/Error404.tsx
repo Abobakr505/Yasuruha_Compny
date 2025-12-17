@@ -3,6 +3,7 @@ import { AlertTriangle, Sparkles, Home, RefreshCw, ChevronRight, Star } from 'lu
 import { Link } from 'react-router-dom';
 import StarField from '../components/StarField';
 import { useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 export default function Error404() {
   const containerVariants = {
@@ -34,9 +35,8 @@ export default function Error404() {
       }
     }
   };
-  useEffect(() =>{
-    document.title = "يسِّرها - صفحة غير موجودة 404  ";
-  })
+useDocumentTitle("يسِّرها - صفحة غير موجودة 404  ");
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated Background */}

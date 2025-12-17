@@ -28,6 +28,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import StarField from '../components/StarField';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 export default function About() {
   // Animation variants for the new section
@@ -157,9 +158,7 @@ export default function About() {
     { icon: Zap, title: 'التحول الرقمي', description: 'رحلة كاملة لنجاحك', color: '#06b6d4' },
   ];
 
-  useEffect(() => {
-    document.title = 'يسِّرها - من نحن';
-  }, []);
+  useDocumentTitle('يسِّرها - من نحن');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] pt-32 pb-24 relative overflow-hidden">

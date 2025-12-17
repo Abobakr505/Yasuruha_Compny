@@ -18,11 +18,13 @@ import {
   Code as CodeIcon,
   CheckCircle,
   Rocket,
+  Filter,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import StarField from '../components/StarField';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 const iconMap = {
   ShoppingCart,
@@ -107,24 +109,24 @@ export default function Projects() {
         .eq('status', 'منشور'); // Only fetch published projects
       if (error) {
         console.error('Error fetching projects:', error);
-        showNotification('خطأ في جلب المشاريع: ' + error.message, 'error');
+        console.log('خطأ في جلب المشاريع: ' + error.message, 'error');
       } else {
         console.log('Fetched projects:', data); // Debug log
         setProjects(data);
         if (data.length === 0) {
-          showNotification('لا توجد مشاريع منشورة متاحة', 'info');
+          console.log('لا توجد مشاريع منشورة متاحة', 'info');
         }
       }
       setLoading(false);
     };
-    document.title = 'يسِّرها - المشاريع';
+   
     fetchProjects();
   }, []);
-
-  const showNotification = (message, type) => {
-    setNotification({ message, type });
-    setTimeout(() => setNotification(null), 5000);
-  };
+ useDocumentTitle('يسِّرها - المشاريع');
+  // const showNotification = (message, type) => {
+  //   setNotification({ message, type });
+  //   setTimeout(() => setNotification(null), 5000);
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e17] via-slate-900 to-[#1e293b] pt-32 pb-24 relative overflow-hidden">
@@ -219,7 +221,7 @@ export default function Projects() {
           <div className="relative max-w-4xl mx-auto">
             {/* الخط العمودي الرابط مع توهج */}
             <motion.div
-              className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full"
+              className="absolute left-1/2 transform -translate-x-1/2 w-1.5 h-full rounded-full"
               style={{ background: 'linear-gradient(to bottom, #10b981, #06b6d4, #8b5cf6)' }}
               animate={{
                 boxShadow: [
@@ -285,19 +287,10 @@ export default function Projects() {
           </div>
         </motion.section>
 
-        {/* Loading State */}
-        {loading && (
-          <motion.div
-            variants={itemVariants}
-            className="text-center flex flex-col items-center gap-2 text-white text-xl mb-8"
-          >
-            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-            جاري التحميل...
-          </motion.div>
-        )}
+       
 
         {/* Projects Carousel */}
-        {!loading && projects.length > 0 && (
+        
           <motion.section
             variants={containerVariants}
             initial="hidden"
@@ -313,7 +306,17 @@ export default function Projects() {
                 </span>
               </h2>
             </motion.div>
-
+             {/* Loading State */}
+        {loading && (
+          <motion.div
+            variants={itemVariants}
+            className="text-center flex flex-col items-center gap-2 text-white text-xl my-16"
+          >
+            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            جاري التحميل...
+          </motion.div>
+        )}
+{!loading && projects.length > 0 && (
             <div className="relative max-w-6xl mx-auto">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -354,8 +357,9 @@ export default function Projects() {
                 })}
               </motion.div>
             </div>
+            )}
           </motion.section>
-        )}
+        
 
         {/* Projects Grid */}
         {!loading && projects.length > 0 && (
@@ -463,7 +467,8 @@ export default function Projects() {
 
         {/* Empty State */}
         {!loading && projects.length === 0 && (
-          <motion.div variants={itemVariants} className="text-center text-white text-xl">
+          <motion.div variants={itemVariants} className="text-center text-white text-xl my-16">
+            <Filter className="mx-auto text-gray-400 mb-4" size={56} />
             لا توجد مشاريع منشورة متاحة
           </motion.div>
         )}

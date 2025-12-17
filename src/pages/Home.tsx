@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
@@ -169,12 +169,12 @@ export default function Home() {
         .limit(4);
       if (error) {
         console.error('Error fetching latest projects:', error);
-        showNotification('خطأ في جلب المشاريع: ' + error.message, 'error');
+        console.log('خطأ في جلب المشاريع: ' + error.message, 'error');
       } else {
         console.log('Fetched latest projects:', data); // Debug log
         setLatestProjects(data);
         if (data.length === 0) {
-          showNotification('لا توجد مشاريع منشورة متاحة', 'info');
+          console.log('لا توجد مشاريع منشورة متاحة', 'info');
         }
       }
       setLoading(false);
@@ -183,14 +183,14 @@ export default function Home() {
     fetchLatestProjects();
   }, []);
 
-  const showNotification = (message, type) => {
-    setNotification({ message, type });
-    setTimeout(() => setNotification(null), 5000);
-  };
+  // const showNotification = (message, type) => {
+  //   setNotification({ message, type });
+  //   setTimeout(() => setNotification(null), 5000);
+  // };
 
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index); // Toggle open/close FAQ
-  };
+  // const toggleFaq = (index) => {
+  //   setOpenFaq(openFaq === index ? null : index); // Toggle open/close FAQ
+  // };
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
@@ -226,26 +226,27 @@ export default function Home() {
                 </motion.div>
               </motion.div>
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-5xl md:text-6xl font-bold text-white mb-6"
-              >
-                نصنع
-                <motion.span
-                  className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient-x "
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                  style={{ backgroundSize: '200% 200%' }}
-                >
-                  {' '}
-                  مستقبلك الرقمي
-                </motion.span>
-                <br />
-                بتميز وإبداع
-              </motion.h1>
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.2 }}
+  className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 leading-relaxed md:leading-snug  lg:leading-snug"
+>
+  نصنع
+  <br />
+<motion.span
+  className="GraphicSchool text-3xl md:text-[2.9rem] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient-x px-4 py-1 rounded-3xl backdrop-blur-md bg-white/20 border border-teal-400/50 shadow-lg"
+  animate={{
+    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+  }}
+  transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+  style={{ backgroundSize: '200% 200%' }}
+>
+  مستقبلك الرقمي
+</motion.span>
+
+  <br />
+  بتميز وإبداع
+</motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -351,27 +352,82 @@ export default function Home() {
               className="rounded-2xl shadow-lg"
             />
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="LAXR text-3xl font-bold text-white mb-4">
-                رؤيتنا ورسالتنا
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                نهدف إلى تمكين المؤسسات والأفراد من التميز في عالم رقمي متغير من خلال حلول تقنية مبتكرة وفعالة.
-              </p>
-              <Link to="/about">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-full font-bold text-lg shadow-lg shadow-emerald-500/30"
-                >
-                  اكتشف المزيد
-                </motion.button>
-              </Link>
-            </motion.div>
+  initial={{ opacity: 0, x: 50 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7, ease: "easeOut" }}
+  className="relative"
+>
+  {/* عنوان */}
+  <h3 className="LAXR text-3xl md:text-4xl font-bold text-white mb-4">
+    رؤيتنا ورسالتنا
+  </h3>
+
+
+  {/* الوصف */}
+  <p className="text-gray-300 text-lg leading-relaxed mb-8 max-w-xl">
+    نعمل على تمكين المؤسسات والأفراد من التميز في عالم رقمي سريع التغير، عبر تقديم
+    حلول تقنية مبتكرة تجمع بين الإبداع، الأداء العالي، وسهولة الاستخدام.
+  </p>
+
+  {/* نقاط مميزة */}
+  <div className="space-y-4 mb-10">
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.1 }}
+  className="flex items-start gap-4"
+>
+  <CheckCircle className="w-5 h-5 text-emerald-400 mt-1 flex-shrink-0" />
+  <p className="text-gray-300">
+    بناء تجارب رقمية حديثة تعكس هوية العملاء وتحقق أهدافهم.
+  </p>
+</motion.div>
+
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.2 }}
+  className="flex items-start gap-4"
+>
+  <CheckCircle className="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" />
+  <p className="text-gray-300">
+    التركيز على الجودة، السرعة، وقابلية التوسع في جميع مشاريعنا.
+  </p>
+</motion.div>
+
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.3 }}
+  className="flex items-start gap-4"
+>
+  <CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
+  <p className="text-gray-300">
+    شراكة طويلة الأمد قائمة على الثقة والدعم المستمر.
+  </p>
+</motion.div>
+
+  </div>
+
+  {/* زر */}
+  <Link to="/about">
+    <motion.button
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.95 }}
+      className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 
+                 text-white rounded-full font-bold text-lg 
+                 shadow-lg shadow-emerald-500/30 
+                 hover:shadow-cyan-500/40 transition-all"
+    >
+      اكتشف المزيد
+    </motion.button>
+  </Link>
+</motion.div>
+
           </div>
         </div>
       </section>
@@ -610,6 +666,7 @@ export default function Home() {
               variants={itemVariants}
               className="text-center text-white text-xl"
             >
+              <Filter className="mx-auto text-gray-400 mb-4" size={56} />
               لا توجد مشاريع منشورة متاحة
             </motion.div>
           )}

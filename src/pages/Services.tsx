@@ -9,11 +9,10 @@ import {
 import { Link } from 'react-router-dom';
 import StarField from '../components/StarField';
 import { useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 export default function Services() {
-  useEffect(() =>{
-    document.title = "يسِّرها - خدمات  ";
-  })
+useDocumentTitle("يسِّرها - خدمات  ");
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

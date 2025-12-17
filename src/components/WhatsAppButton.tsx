@@ -3,7 +3,8 @@ import {
   Headset,
   X,
   Sparkles as SparklesIcon,
-  BriefcaseBusiness
+  BriefcaseBusiness,
+  BotMessageSquare
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
@@ -51,7 +52,7 @@ export function WhatsAppButton() {
                   href: `https://yasuruha-form.netlify.app/`,
                 },
                 {
-                  Icon: SparklesIcon,
+                  Icon: BotMessageSquare ,
                   label: "المساعد الذكي",
                   onClick: () => setModalOpen(true),
                 }

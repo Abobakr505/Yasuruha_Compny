@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
-  Code2, Menu, X, Sparkles, Home, Info, Package, Folder, MessageSquare 
+  Code2, Menu, X, Sparkles, Home, BadgeInfo, Package, FolderOpenDot , MessageCircleHeart 
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -11,10 +11,10 @@ export default function Navbar() {
 
   const navItems = [
     { path: '/', label: 'الرئيسية', icon: Home },
-    { path: '/about', label: 'من نحن', icon: Info },
-    { path: '/services', label: 'الخدمات', icon: Package },
-    { path: '/projects', label: 'المشاريع', icon: Folder },
-    { path: '/contact', label: 'تواصل معنا ', icon: MessageSquare },
+    { path: '/about', label: 'من نحن', icon: BadgeInfo },
+    { path: '/services', label: 'الخدمات', icon: Sparkles },
+    { path: '/projects', label: 'المشاريع', icon: FolderOpenDot  },
+    { path: '/contact', label: 'تواصل معنا ', icon: MessageCircleHeart },
   ];
 
   const sidebarVariants = {
@@ -91,7 +91,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden  relative p-2 text-white rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu size={24} />
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"
               />
