@@ -11,7 +11,7 @@ import useDocumentTitle from '../hooks/useDocumentTitle';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '', email: '', phone: '', subject: '', message: ''
+    name: '', email: '', phone: '', subject: '', message: '' , year: new Date().getFullYear(),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -102,7 +102,7 @@ export default function Contact() {
   useDocumentTitle("يسِّرها - تواصل معنا ");
   const contactInfo = [
     { icon: Mail, title: 'البريد الإلكتروني', value: 'yasuruha1@gmail.com', link: 'mailto:yasuruha1@gmail.com', color: '#3b82f6' },
-    { icon: Phone, title: 'الهاتف', value: '+201093954137', link: 'tel:+201093954137', color: '#10b981' },
+    { icon: Phone, title: 'الهاتف', value: '+20115818874', link: 'tel:+20115818874', color: '#10b981' },
     { icon: MapPin, title: 'الموقع', value: 'سوهاج , مصر ', link: '#', color: '#8b5cf6' },
     { icon: Clock, title: 'ساعات العمل', value: '9AM - 6PM', link: '#', color: '#f97316' }
   ];

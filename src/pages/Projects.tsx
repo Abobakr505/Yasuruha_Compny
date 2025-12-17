@@ -403,16 +403,16 @@ export default function Projects() {
                           animate={{ x: 0 }}
                           className="absolute top-4 left-4"
                         >
-                          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-slate-900 rounded-full text-xs font-bold">
+                          <span className={`px-3 py-1 bg-gradient-to-br ${project.gradient} backdrop-blur-sm text-white rounded-full text-xs font-bold`}>
                             {project.category}
                           </span>
                         </motion.div>
                         <motion.div
                           whileHover={{ scale: 1.1, rotate: 360 }}
                           transition={{ duration: 0.6 }}
-                          className={`absolute top-4 right-4 w-12 h-12 ${project.gradient} rounded-full flex items-center justify-center shadow-lg`}
+                          className={`absolute top-4 right-4 w-12 h-12 bg-gradient-to-r ${project.gradient}  rounded-full flex items-center justify-center `}
                         >
-                          <IconComponent className="w-6 h-6 text-white" />
+                          <IconComponent className="w-6 h-6 text-white " />
                         </motion.div>
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                           <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
@@ -428,19 +428,6 @@ export default function Projects() {
                               >
                                 {tag}
                               </motion.span>
-                            ))}
-                          </div>
-                          <div className="flex justify-between">
-                            {Object.values(project.stats || {}).slice(0, 3).map((stat, idx) => (
-                              <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 + idx * 0.1 }}
-                                className="text-center"
-                              >
-                                <div className="text-lg font-bold text-emerald-400 text-sm">{stat}</div>
-                              </motion.div>
                             ))}
                           </div>
                         </div>

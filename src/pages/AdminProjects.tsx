@@ -134,14 +134,14 @@ function ReviewForm(props: any) {
           className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
           value={newReview.name}
           onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-          required
+          
         />
         <textarea
           placeholder="نص الرأي"
           className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
           value={newReview.text}
           onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
-          required
+          
           rows={3}
         />
         <select
@@ -740,9 +740,7 @@ export default function AdminProjects() {
                         >
                           <Trash2 size={16} />
                         </motion.button>
-                        <motion.button whileHover={{ scale: 1.1 }} className="p-2 text-purple-400 hover:text-purple-300">
-                          <Download size={16} />
-                        </motion.button>
+                        
                       </div>
                     </td>
                   </motion.tr>
@@ -772,9 +770,9 @@ export default function AdminProjects() {
                   <X size={28} />
                 </motion.button>
               </div>
-              <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="col-span-2">
-                  <label className="block text-white font-semibold mb-2">القالب</label>
+              <form onSubmit={handleAddOrUpdateProject} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                 <div className="col-span-2">
+                  <label className="block text-white font-semibold mb-1">القالب</label>
                   <select
                     className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
                     onChange={(e) => applyInfo(e.target.value)}
@@ -785,7 +783,7 @@ export default function AdminProjects() {
                     <option value="corporate">موقع مؤسسي</option>
                   </select>
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">
                     العنوان <span className="text-red-400">*</span>
                   </label>
@@ -797,7 +795,7 @@ export default function AdminProjects() {
                     required
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">
                     الفئة <span className="text-red-400">*</span>
                   </label>
@@ -832,7 +830,7 @@ export default function AdminProjects() {
                     rows={4}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">الصورة الرئيسية</label>
                   <div className="relative">
                     <input
@@ -861,7 +859,7 @@ export default function AdminProjects() {
                     </div>
                   )}
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">الصور الفرعية</label>
                   <div className="relative">
                     <input
@@ -906,7 +904,7 @@ export default function AdminProjects() {
                     </div>
                   )}
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">الأيقونة</label>
                   <select
                     className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
@@ -918,7 +916,7 @@ export default function AdminProjects() {
                     ))}
                   </select>
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">الوسوم</label>
                   <CreatableSelect
                     isMulti
@@ -1010,7 +1008,8 @@ export default function AdminProjects() {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="col-span-2">
+                  
                   <label className="block text-white font-semibold mb-2">اللون</label>
                   <input
                     type="color"
@@ -1019,7 +1018,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, color: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">التدرج اللوني</label>
                   <input
                     placeholder="التدرج, مثال: from-emerald-500 to-teal-500"
@@ -1028,7 +1027,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, gradient: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">تاريخ التسليم</label>
                   <input
                     type="date"
@@ -1037,7 +1036,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">مدة المشروع</label>
                   <input
                     placeholder="مدة المشروع"
@@ -1046,7 +1045,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">حجم الفريق</label>
                   <input
                     placeholder="حجم الفريق"
@@ -1055,7 +1054,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, team_size: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">العميل</label>
                   <input
                     placeholder="اسم العميل"
@@ -1064,7 +1063,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2">
                   <label className="block text-white font-semibold mb-2">رابط الموقع</label>
                   <input
                     placeholder="رابط الموقع"
@@ -1073,8 +1072,8 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, live_url: e.target.value })}
                   />
                 </div>
-                <div>
-                  <label className="block text-white font-semibold mb-2">رابط دراسة الحالة</label>
+                <div className="col-span-2">
+                <label className="block text-white font-semibold mb-2">رابط قصّة المشروع</label>
                   <input
                     placeholder="رابط دراسة الحالة"
                     className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"
@@ -1082,7 +1081,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, case_study_url: e.target.value })}
                   />
                 </div>
-                <div>
+                <div className="col-span-2 ">
                   <label className="block text-white font-semibold mb-2">الحالة</label>
                   <select
                     className="w-full p-3 rounded-xl bg-slate-800/50 border border-emerald-500/30 text-white focus:ring-2 focus:ring-emerald-400"

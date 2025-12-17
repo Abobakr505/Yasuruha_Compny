@@ -68,7 +68,7 @@ export default function Footer() {
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
-                href="tel:+201093954137"
+                href="tel:+20115818874"
                 className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-green-500 transition-colors"
               >
                 <Phone size={20} />
@@ -130,7 +130,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-teal-400" />
-                <span dir="ltr">+201093954137</span>
+                <span dir="ltr">+20115818874</span>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-teal-400" />

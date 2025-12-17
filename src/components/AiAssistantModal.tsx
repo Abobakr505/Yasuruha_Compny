@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Chat, GoogleGenAI } from "@google/genai";
 import { ChatMessage } from '../lib/types';
 import { SERVICES_DATA } from '../data/constants';
-import { X, SendIcon, SparklesIcon } from 'lucide-react';
+import { X, SendIcon, BotMessageSquare } from 'lucide-react';
 
 interface AiAssistantModalProps {
   onClose: () => void;
@@ -92,9 +92,9 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 mt-4" onClick={onClose}>
       <div className="w-full max-w-2xl h-[80vh] bg-stone-100 rounded-2xl shadow-2xl flex flex-col border border-stone-300 mt-20" onClick={e => e.stopPropagation()}>
         <header className="flex items-center justify-between p-4 border-b border-stone-200">
-          <div className="flex items-center space-x-3">
-            <SparklesIcon className="w-6 h-6 text-cyan-400" />
-            <h2 className="text-3xl text-[#31cb86] mr-2">المساعد الذكي </h2>
+          <div className="flex items-center space-x-3 gap-2">
+            <BotMessageSquare className="w-8 h-8 text-cyan-400" />
+            <h2 className="text-3xl text-teal-400 mr-2">المساعد الذكي </h2>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-slate-900 transition-colors" aria-label="Close modal">
             <X className="w-6 h-6" />
@@ -135,7 +135,7 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
               disabled={isLoading}
               dir="rtl"
             />
-            <button type="submit" disabled={isLoading || !input.trim()} className="p-3 bg-cyan-400 text-white rounded-full disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors hover:bg-[#31cb86]">
+            <button type="submit" disabled={isLoading || !input.trim()} className="p-3 bg-cyan-400 text-white rounded-full disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-300 hover:bg-emerald-400">
               <SendIcon className="w-5 h-5" />
             </button>
           </div>

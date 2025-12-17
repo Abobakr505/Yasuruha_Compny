@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Eye, Download, Calendar, Clock, Users, Star } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Eye, BookOpen, Calendar, Clock, Users, Star } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
@@ -206,108 +206,128 @@ export default function ProjectDetail() {
           </motion.p>
         </motion.div>
 
-        <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div variants={itemVariants} className="relative group">
-              <div className={`relative group rounded-3xl overflow-hidden border-2 border-white/20 ${project.gradient}`}>
-                <img
-                  src={project.image || 'https://via.placeholder.com/800x600'}
-                  alt={project.title}
-                  className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none z-10" />
-                <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 pointer-events-none z-20">
-                  <h3 className="LAXR text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <div className="flex items-center gap-4 text-emerald-400">
-                    <Eye className="w-5 h-5" />
-                    <span className="GraphicSchool bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                      متع نظرك
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+        <motion.section
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  className="mb-24"
+>
+  <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-            <motion.div variants={itemVariants} className="space-y-6">
-              {/* Main card: icon + title + long description + tags */}
-              <motion.div className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br flex flex-col sm:flex-row gap-6 items-start`} whileHover={{ scale: 1.05 }}>
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
-                    <IconComponent className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.category}</h3>
-                  <p className="text-gray-300 leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
-
-                  {project.tags?.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tags.map((tag: string, i: number) => (
-                        <span
-                          key={i}
-                          className="text-xs font-semibold text-white/90 bg-white/5 px-3 py-1 rounded-full border border-white/10"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Stats grid: responsive and with icons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {project.stats &&
-                  Object.entries(project.stats).map(([key, value]) => {
-                    const StatIcon = statsIconMap[key] || Star;
-                    return (
-                      <motion.div
-                        key={key}
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.05 }}
-                        className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center flex flex-col items-center justify-center"
-                      >
-                        <div className={`w-10 h-10 mb-3 rounded-full ${project.gradient} bg-gradient-to-br flex items-center justify-center`}>
-                          <StatIcon className="w-5 h-5 text-white" />
-                        </div>
-                        <div className={`text-2xl sm:text-3xl font-bold  ${project.gradient} bg-gradient-to-br bg-clip-text text-transparent mb-1`}>{value || '—'}</div>
-                        <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
-                      </motion.div>
-                    );
-                  })}
-              </div>
-
-              <div className="flex gap-4 pt-4">
-                {project.live_url && (
-                  <motion.a
-                    href={safeLiveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    className={`flex-1 px-6 py-4 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg`}
-                  >
-                    <Globe className="w-5 h-5" />
-                    عرض الموقع
-                  </motion.a>
-                )}
-                {project.case_study_url && (
-                  <motion.a
-                    href={safeCaseStudyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-bold flex items-center justify-center gap-2"
-                  >
-                    <Download className="w-5 h-5" />
-                    دراسة الحالة
-                  </motion.a>
-                )}
-              </div>
-            </motion.div>
+    {/* Hero Image Card */}
+    <motion.div variants={itemVariants} className="relative group rounded-3xl overflow-hidden border-2 border-white/20 shadow-lg hover:shadow-2xl transition-shadow duration-300">
+      <div className={`relative rounded-3xl overflow-hidden ${project.gradient} bg-gradient-to-br`}>
+        <img
+          src={project.image || 'https://via.placeholder.com/800x600'}
+          alt={project.title}
+          className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl z-10 pointer-events-none" />
+        <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 z-20 pointer-events-none">
+          <h3 className="LAXR text-2xl sm:text-3xl font-bold text-white mb-2">{project.title}</h3>
+          <div className="flex items-center gap-3">
+            {/* أيقونة داخل دائرة */}
+            <div className={`w-8 h-8 bg-gradient-to-r ${project.gradient} rounded-full flex items-center justify-center shadow-md`}>
+              <Eye className="w-5 h-5 text-white" />
+            </div>
+            {/* النص مع gradient */}
+            <span className={`GraphicSchool bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent text-lg sm:text-xl font-semibold`}>
+              متع نظرك
+            </span>
           </div>
-        </motion.section>
+        </div>
+      </div>
+    </motion.div>
+
+    {/* Main Info Card */}
+    <motion.div variants={itemVariants} className="space-y-6">
+
+      {/* Project Card */}
+      <motion.div
+        className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br flex flex-col sm:flex-row gap-4 sm:gap-6 items-start shadow-md hover:scale-105 transition-transform duration-300`}
+      >
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
+            <IconComponent className="w-8 h-8 text-white" />
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{project.category}</h3>
+          <p className="text-gray-300 leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
+
+          {project.tags?.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.tags.map((tag: string, i: number) => (
+                <span
+                  key={i}
+                  className="text-xs font-semibold text-white/90 bg-white/5 px-3 py-1 rounded-full border border-white/10"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {project.stats &&
+          Object.entries(project.stats).map(([key, value]) => {
+            const StatIcon = statsIconMap[key] || Star;
+            return (
+              <motion.div
+                key={key}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center flex flex-col items-center justify-center shadow-md transition-transform duration-300"
+              >
+                <div className={`w-10 h-10 mb-3 rounded-full ${project.gradient} bg-gradient-to-br flex items-center justify-center shadow-sm`}>
+                  <StatIcon className="w-5 h-5 text-white" />
+                </div>
+                <div className={`text-2xl sm:text-3xl font-bold ${project.gradient} bg-gradient-to-br bg-clip-text text-transparent mb-1`}>
+                  {value || '—'}
+                </div>
+                <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
+              </motion.div>
+            );
+          })}
+      </div>
+
+      {/* Buttons */}
+      <div className="flex flex-col sm:flex-row gap-4 pt-4">
+        {project.live_url && (
+          <motion.a
+            href={safeLiveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            className={`flex-1 px-6 py-4 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg transition-transform duration-300`}
+          >
+            <Globe className="w-5 h-5" />
+            عرض الموقع
+          </motion.a>
+        )}
+        {project.case_study_url && (
+          <motion.a
+            href={safeCaseStudyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-md transition-transform duration-300"
+          >
+            <BookOpen className="w-5 h-5" />
+           قصّة المشروع
+          </motion.a>
+        )}
+      </div>
+    </motion.div>
+
+  </div>
+</motion.section>
 
         {project.screenshots?.length > 0 && (
           <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-24">
