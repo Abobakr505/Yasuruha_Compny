@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
 import { supabase } from '../lib/supabase';
+import Testimonials  from '../components/Testimonials'
 
 // Motion variants used across the component
 const itemVariants = {
@@ -747,51 +748,8 @@ export default function Home() {
         </div>
       </section>
       {/* ======= TESTIMONIALS SECTION ======= */}
-      <section className="relative py-24 bg-gradient-to-b from-[#0a0e17] to-slate-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              آراء <span className="GraphicSchool text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">عملائنا</span>
-            </h2>
-            <p className="text-xl text-gray-300">تعرف على تجارب عملائنا وكيف ساعدناهم في تحقيق أهدافهم</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.05 }}
-                className="group relative bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 overflow-hidden transition-all"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative p-8">
-                  <div className="flex items-center flex-col mb-4">
-                      <h3 className="text-xl font-bold text-white">{testimonial.name}</h3>
-                      <p className="text-gray-400 text-sm">{testimonial.role}</p>
-                  </div>
-                  <p className="text-gray-300 leading-relaxed mb-4">{testimonial.text}</p>
-                  <div className="flex justify-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-600'}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+     <Testimonials />
+
       <section className="py-24 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border-y border-emerald-500/20 relative overflow-hidden">
         <StarField />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
