@@ -74,24 +74,30 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
         </header>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex items-end gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-md lg:max-w-lg p-3 rounded-2xl ${msg.role === 'user' ? 'bg-cyan-400 text-white rounded-br-none' : 'bg-stone-200 text-slate-800 rounded-bl-none'}`}>
-                <p className="whitespace-pre-wrap leading-relaxed font-medium">{msg.text}</p>
-              </div>
+        {messages.map((msg, index) => (
+          <div key={index} className={`flex items-end gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-md lg:max-w-lg p-3 rounded-2xl ${msg.role === 'user' ? 'bg-cyan-400 text-white rounded-br-none' : 'bg-stone-200 text-slate-800 rounded-bl-none'}`}>
+              <p className="whitespace-pre-wrap leading-relaxed font-medium">{msg.text}</p>
+              
+              {/* إذا كانت هناك صورة */}
+              {msg.image && (
+                <img src={msg.image} alt="Service" className="mt-2 rounded-lg shadow-md object-cover max-h-48 w-full" />
+              )}
             </div>
-          ))}
-          {isLoading && (
-             <div className="flex items-end gap-3 justify-start">
-                <div className="max-w-md lg:max-w-lg p-3 rounded-2xl bg-stone-200 text-slate-800 rounded-bl-none">
-                   <div className="flex items-center space-x-2">
-                        <span className="h-2 w-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                        <span className="h-2 w-2 bg-cyan-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                        <span className="h-2 w-2 bg-cyan-400 rounded-full animate-bounce"></span>
-                   </div>
-                </div>
-             </div>
-          )}
+          </div>
+        ))}
+
+{isLoading && (
+  <div className="flex items-end gap-3 justify-start">
+    <div className="max-w-md lg:max-w-lg p-3 rounded-2xl bg-stone-200 text-slate-800 rounded-bl-none flex items-center gap-2">
+      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-75"></div>
+      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-150"></div>
+      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-300"></div>
+      <span className="text-sm text-slate-600">جاري الكتابة...</span>
+    </div>
+  </div>
+)}
+
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <div ref={messagesEndRef} />
         </div>
