@@ -1,134 +1,150 @@
 import { ServiceCategory } from '../lib/types';
 
-export const WHATSAPP_NUMBER = "+15551234567"; // Replace with actual WhatsApp number
+export const WHATSAPP_NUMBER = "+201XXXXXXXXX"; // رقمك الحقيقي
 
 export const SERVICES_DATA: ServiceCategory[] = [
   {
-    category: 'تطوير الويب',
+    category: 'تطوير مواقع الويب',
     items: [
       {
-        name: 'موقع ويب أساسي',
-        description: 'تصميم وتطوير موقع ويب بسيط باستخدام HTML، CSS، وJavaScript.',
-        price: '5000 SAR',
-        image: 'https://picsum.photos/seed/basic-website/400/300',
+        name: 'موقع تعريفي (Landing / شركة)',
+        description:
+          'تصميم وتطوير موقع ويب احترافي لعرض نشاطك وخدماتك، مناسب للشركات والأفراد.',
+        price: '6,000 – 8,000 EGP',
+        image: 'https://picsum.photos/seed/web-basic/400/300',
         tags: ['الأكثر طلباً'],
-        timeline: '2-4 أسابيع',
-        features: ['صفحات ثابتة', 'تصميم سريع الاستجابة', 'تحسين SEO أساسي']
+        timeline: '7 – 10 أيام',
+        features: [
+          'تصميم متجاوب لجميع الشاشات',
+          'أداء عالي وسرعة تحميل ممتازة',
+          'تحسين SEO أساسي',
+          'استضافة مجانية على Netlify أو Vercel',
+          'SSL مجاني',
+          'ربط دومين (الدومين غير مشمول)'
+        ]
       },
       {
-        name: 'موقع ويب ديناميكي',
-        description: 'تطوير موقع ويب متقدم باستخدام React أو Vue مع قاعدة بيانات.',
-        price: '15000 SAR',
-        image: 'https://picsum.photos/seed/dynamic-website/400/300',
-        tags: ['متقدم'],
-        timeline: '4-8 أسابيع',
-        features: ['إدارة المحتوى', 'تكامل API', 'أمان متقدم']
+        name: 'موقع ديناميكي (Dashboard / CMS)',
+        description:
+          'موقع ويب متكامل مع لوحة تحكم لإدارة المحتوى باستخدام React و API.',
+        price: '12,000 – 18,000 EGP',
+        image: 'https://picsum.photos/seed/web-dynamic/400/300',
+        tags: ['احترافي'],
+        timeline: '2 – 4 أسابيع',
+        features: [
+          'لوحة تحكم مخصصة',
+          'ربط قواعد بيانات',
+          'نظام صلاحيات',
+          'استضافة مجانية (Vercel)',
+          'إعداد بيئة إنتاج كاملة',
+          'توثيق المشروع'
+        ]
       },
       {
-        name: 'تطبيق ويب مخصص',
-        description: 'بناء تطبيق ويب كامل حسب احتياجات العميل مع ميزات متقدمة.',
-        price: '30000 SAR',
-        image: 'https://picsum.photos/seed/custom-web-app/400/300',
+        name: 'تطبيق ويب مخصص (Web App)',
+        description:
+          'بناء تطبيق ويب متكامل حسب متطلبات النشاط التجاري.',
+        price: '20,000 – 35,000 EGP',
+        image: 'https://picsum.photos/seed/web-app/400/300',
         tags: ['مخصص'],
-        timeline: '8-12 أسبوع',
-        features: ['واجهة مستخدم مخصصة', 'قواعد بيانات معقدة', 'تكامل مع أنظمة خارجية']
-      },
+        timeline: '4 – 8 أسابيع',
+        features: [
+          'واجهة مستخدم مخصصة 100%',
+          'بنية احترافية قابلة للتوسع',
+          'تكامل API خارجي',
+          'استضافة Production مجانية',
+          'اختبارات وأداء عالي'
+        ]
+      }
     ]
   },
+
   {
-    category: 'تطوير التطبيقات المحمولة',
+    category: 'تطوير تطبيقات الموبايل',
     items: [
       {
-        name: 'تطبيق Android أساسي',
-        description: 'تطوير تطبيق أندرويد بسيط باستخدام Kotlin أو Java.',
-        price: '10000 SAR',
-        image: 'https://picsum.photos/seed/android-app/400/300',
+        name: 'تطبيق موبايل أساسي',
+        description:
+          'تطبيق موبايل بسيط لعرض المحتوى أو الخدمات باستخدام Flutter.',
+        price: '15,000 – 20,000 EGP',
+        image: 'https://picsum.photos/seed/mobile-basic/400/300',
         tags: ['الأكثر طلباً'],
-        timeline: '3-6 أسابيع',
-        features: ['واجهة بسيطة', 'تكامل مع الجهاز', 'نشر على Google Play']
+        timeline: '3 – 5 أسابيع',
+        features: [
+          'Android أو iOS',
+          'تصميم عصري',
+          'أداء ثابت',
+          'تهيئة للنشر',
+          'تسليم الكود كامل'
+        ]
       },
       {
-        name: 'تطبيق iOS أساسي',
-        description: 'تطوير تطبيق آيفون بسيط باستخدام Swift.',
-        price: '12000 SAR',
-        image: 'https://picsum.photos/seed/ios-app/400/300',
-        tags: ['متقدم'],
-        timeline: '3-6 أسابيع',
-        features: ['واجهة بسيطة', 'تكامل مع iOS', 'نشر على App Store']
+        name: 'تطبيق موبايل (Android & iOS)',
+        description:
+          'تطبيق يعمل على أندرويد و iOS من كود واحد باستخدام Flutter أو React Native.',
+        price: '22,000 – 30,000 EGP',
+        image: 'https://picsum.photos/seed/mobile-cross/400/300',
+        tags: ['Cross-Platform'],
+        timeline: '4 – 6 أسابيع',
+        features: [
+          'كود موحد',
+          'ربط API',
+          'إشعارات',
+          'جاهز للنشر',
+          'دعم فني بعد التسليم'
+        ]
       },
       {
-        name: 'تطبيق هجين (Cross-Platform)',
-        description: 'تطوير تطبيق يعمل على Android وiOS باستخدام Flutter أو React Native.',
-        price: '20000 SAR',
-        image: 'https://picsum.photos/seed/hybrid-app/400/300',
-        tags: ['فعال'],
-        timeline: '5-10 أسابيع',
-        features: ['كود مشترك', 'أداء عالي', 'نشر على كلا المنصتين']
-      },
+        name: 'تطبيق مخصص متقدم',
+        description:
+          'حل متكامل لتطبيقات الشركات مع خصائص مخصصة.',
+        price: '35,000+ EGP',
+        image: 'https://picsum.photos/seed/mobile-advanced/400/300',
+        tags: ['احترافي'],
+        timeline: '6 – 10 أسابيع',
+        features: [
+          'تحليل متطلبات كامل',
+          'تصميم UI/UX احترافي',
+          'تكامل أنظمة خارجية',
+          'اختبارات شاملة',
+          'دعم ما بعد الإطلاق'
+        ]
+      }
     ]
   },
+
   {
-    category: 'تصميم UI/UX',
+    category: 'مزايا مجانية مع كل مشروع',
     items: [
       {
-        name: 'تصميم واجهة مستخدم أساسي',
-        description: 'تصميم UI بسيط باستخدام Figma أو Adobe XD.',
-        price: '4000 SAR',
-        image: 'https://picsum.photos/seed/ui-design/400/300',
-        tags: ['الأكثر طلباً'],
-        timeline: '1-2 أسابيع',
-        features: ['رسومات أساسية', 'نماذج أولية', 'تعديلات محدودة']
+        name: 'استضافة ونشر',
+        description:
+          'نشر المشروع على منصات موثوقة مع إعداد بيئة الإنتاج.',
+        price: 'مجاني',
+        image: 'https://picsum.photos/seed/hosting/400/300',
+        tags: ['Free'],
+        timeline: 'ضمن مدة التنفيذ',
+        features: [
+          'Netlify أو Vercel',
+          'SSL مجاني',
+          'إعداد DNS',
+          'أفضل ممارسات الأمان'
+        ]
       },
       {
-        name: 'تصميم تجربة مستخدم كاملة',
-        description: 'تصميم UX/UI شامل مع بحث مستخدم واختبارات.',
-        price: '8000 SAR',
-        image: 'https://picsum.photos/seed/ux-design/400/300',
-        tags: ['شامل'],
-        timeline: '2-4 أسابيع',
-        features: ['بحث مستخدم', 'نماذج تفاعلية', 'تحسينات مستمرة']
-      },
-      {
-        name: 'إعادة تصميم تطبيق موجود',
-        description: 'تحديث وإعادة تصميم UI/UX لتطبيق أو موقع موجود.',
-        price: '6000 SAR',
-        image: 'https://picsum.photos/seed/redesign/400/300',
-        tags: ['تحديث'],
-        timeline: '2-3 أسابيع',
-        features: ['تحليل الحالي', 'تصميم جديد', 'اختبارات']
-      },
-    ]
-  },
-  {
-    category: 'خدمات أخرى',
-    items: [
-      {
-        name: 'صيانة ودعم فني',
-        description: 'خدمات صيانة شهرية للمواقع والتطبيقات.',
-        price: '2000 SAR/شهر',
-        image: 'https://picsum.photos/seed/maintenance/400/300',
-        tags: ['مستمر'],
-        timeline: 'شهري',
-        features: ['تحديثات أمنية', 'إصلاح أخطاء', 'دعم 24/7']
-      },
-      {
-        name: 'تكامل API',
-        description: 'تكامل مع خدمات خارجية مثل الدفع أو الخرائط.',
-        price: '5000 SAR',
-        image: 'https://picsum.photos/seed/api-integration/400/300',
-        tags: ['تقني'],
-        timeline: '1-3 أسابيع',
-        features: ['تكامل آمن', 'اختبارات', 'وثائق']
-      },
-      {
-        name: 'تطوير برمجيات مخصصة',
-        description: 'حلول برمجية مخصصة للأعمال الكبيرة.',
-        price: '50000 SAR+',
-        image: 'https://picsum.photos/seed/custom-software/400/300',
-        tags: ['مخصص'],
-        timeline: '3-6 أشهر',
-        features: ['تحليل احتياجات', 'تطوير كامل', 'تدريب']
-      },
+        name: 'دعم فني بعد التسليم',
+        description:
+          'دعم فني لضمان استقرار المشروع بعد الإطلاق.',
+        price: 'مجاني (14 يوم)',
+        image: 'https://picsum.photos/seed/support/400/300',
+        tags: ['Bonus'],
+        timeline: 'بعد التسليم',
+        features: [
+          'إصلاح أخطاء',
+          'مساعدة في الإطلاق',
+          'إرشادات الاستخدام'
+        ]
+      }
     ]
   }
 ];
