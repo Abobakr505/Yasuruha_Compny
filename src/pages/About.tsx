@@ -23,7 +23,11 @@ import {
   Eye,
   Flag,
   Medal,
-  CheckCircle, // Added CheckCircle icon
+  CheckCircle,
+  Clock,
+  ShieldCheck,
+  Code,
+  Lightbulb, // Added CheckCircle icon
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
@@ -258,8 +262,8 @@ export default function About() {
               </span>
             </h2>
             <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-              في يسِّرها، نحن فريق شغوف يحول الأفكار إلى واقع مبهر. نصمم مساحات
-              تجمع بين الأناقة والابتكار، لنروي قصة كل مساحة بأسلوب فريد.
+              في يسِّرها، نحن فريق شغوف يحول الأفكار إلى واقع مبهر. نصمم مشاريع
+              تجمع بين الأناقة والابتكار، لنروي قصة كل مشروع بأسلوب فريد.
             </p>
             <p className="text-base text-gray-400 mb-6 leading-relaxed">
               باستخدام أحدث التقنيات ولمسة إبداعية، نحن هنا لنصنع تجارب بصرية
@@ -613,9 +617,10 @@ export default function About() {
             className="grid md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto"
           >
             {[
-              { icon: MapPin, text: 'سوهاج, مصر', color: '#10b981' },
-              { icon: Phone, text: '+201093954137', color: '#06b6d4' },
-              { icon: Mail, text: 'yasuruha1@gmail.com', color: '#f59e0b' },
+              { icon: Lightbulb, text: 'أفكار مبتكرة', color: '#8b5cf6' },
+              { icon: Code, text: 'خبرة تقنية', color: '#0ea5e9' },
+              { icon: ShieldCheck, text: 'ثقة واحترافية', color: '#22c55e' }
+
             ].map((item, index) => (
               <motion.div
                 variants={itemVariants}

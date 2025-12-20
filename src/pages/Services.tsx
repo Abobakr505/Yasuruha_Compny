@@ -55,20 +55,13 @@ useDocumentTitle("يسِّرها - خدمات  ");
       color: '#10b981',
       gradient: 'from-emerald-500 to-teal-500'
     },
-    {
-      icon: Cloud,
-      title: 'الحلول السحابية',
-      description: 'AWS & Azure متطورة',
-      color: '#f97316',
-      gradient: 'from-orange-500 to-red-500'
-    },
-    {
-      icon: Lock,
-      title: 'الأمن السيبراني',
-      description: 'حماية شاملة',
-      color: '#ef4444',
-      gradient: 'from-red-500 to-rose-500'
-    },
+    // {
+    //   icon: Cloud,
+    //   title: 'الحلول السحابية',
+    //   description: 'AWS & Azure متطورة',
+    //   color: '#f97316',
+    //   gradient: 'from-orange-500 to-red-500'
+    // },
     {
       icon: Palette,
       title: 'تصميم UI/UX',

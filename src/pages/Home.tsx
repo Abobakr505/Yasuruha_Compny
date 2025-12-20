@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
 import { supabase } from '../lib/supabase';
 import Testimonials  from '../components/Testimonials'
+
 
 // Motion variants used across the component
 const itemVariants = {
@@ -96,18 +97,20 @@ export default function Home() {
       description: 'تصميم وإدارة قواعد بيانات قوية وآمنة',
       gradient: 'from-emerald-500 to-teal-500',
     },
+,
     {
-      icon: Cloud,
-      title: 'الحلول السحابية',
-      description: 'بنية تحتية سحابية متقدمة على AWS و Azure',
-      gradient: 'from-orange-500 to-red-500',
+      icon: Settings,
+      title: 'الصيانة والدعم',
+      description: '24/7 متاح دائماً',
+      gradient: 'from-gray-500 to-slate-500'
     },
     {
-      icon: Lock,
-      title: 'الأمن السيبراني',
-      description: 'حماية شاملة من التهديدات الإلكترونية',
-      gradient: 'from-red-500 to-rose-500',
+      icon: Rocket,
+      title: 'استشارات تقنية',
+      description: 'خطط تنفيذ مثالية',
+      gradient: 'from-cyan-500 to-blue-500'
     },
+
     {
       icon: Palette,
       title: 'تصميم UI/UX',
@@ -116,29 +119,6 @@ export default function Home() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'أحمد محمد',
-      role: 'مدير شركة تقنية',
-      image: 'https://via.placeholder.com/100',
-      text: 'تعاونت مع يسرها في تطوير تطبيق ويب لشركتنا، وكانت التجربة مذهلة! الفريق محترف وملتزم بالمواعيد.',
-      rating: 5,
-    },
-    {
-      name: 'سارة عبدالله',
-      role: 'صاحبة متجر إلكتروني',
-      image: 'https://via.placeholder.com/100',
-      text: 'تصميم واجهة المستخدم كان رائعاً وسهل الاستخدام، مما زاد من رضا عملائنا بنسبة كبيرة.',
-      rating: 4,
-    },
-    {
-      name: 'محمود علي',
-      role: 'مدير مشروع',
-      image: 'https://via.placeholder.com/100',
-      text: 'حلول السحابة التي قدمتها يسرها ساعدتنا على تحسين الأداء وتقليل التكاليف بشكل ملحوظ.',
-      rating: 5,
-    },
-  ];
 
   const faqs = [
     {
@@ -189,9 +169,9 @@ export default function Home() {
   //   setTimeout(() => setNotification(null), 5000);
   // };
 
-  // const toggleFaq = (index) => {
-  //   setOpenFaq(openFaq === index ? null : index); // Toggle open/close FAQ
-  // };
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index); // Toggle open/close FAQ
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
@@ -272,7 +252,7 @@ export default function Home() {
                     <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                   </motion.button>
                 </Link>
-                <Link to="/services">
+                <Link to="/projects">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -749,7 +729,6 @@ export default function Home() {
       </section>
       {/* ======= TESTIMONIALS SECTION ======= */}
      <Testimonials />
-
       <section className="py-24 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border-y border-emerald-500/20 relative overflow-hidden">
         <StarField />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
