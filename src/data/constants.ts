@@ -11,7 +11,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
         description:
           'تصميم وتطوير موقع ويب احترافي لعرض نشاطك وخدماتك، مناسب للشركات والأفراد.',
         price: '6,000 – 8,000 EGP',
-        image: 'https://picsum.photos/seed/web-basic/400/300',
+        image: 'https://yasuruha.netlify.app/about.png',
         tags: ['الأكثر طلباً'],
         timeline: '7 – 10 أيام',
         features: [

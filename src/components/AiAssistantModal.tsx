@@ -93,7 +93,6 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
       <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-75"></div>
       <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-150"></div>
       <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-300"></div>
-      <span className="text-sm text-slate-600">جاري الكتابة...</span>
     </div>
   </div>
 )}
