@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Chat, GoogleGenAI } from "@google/genai";
+import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../lib/types';
 import { SERVICES_DATA } from '../data/constants';
 import { X, SendIcon, BotMessageSquare } from 'lucide-react';
@@ -9,53 +8,22 @@ interface AiAssistantModalProps {
 }
 
 const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: 'model', text: 'أهلاً بك في شركة "يسرها"! كيف يمكنني مساعدتك في خدمات البرمجيات اليوم؟' }
+  ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const chatRef = useRef<Chat | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
   useEffect(scrollToBottom, [messages]);
-
-  const initializeChat = useCallback(() => {
-    try {
-        const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-        if (!apiKey) {
-            throw new Error("VITE_GEMINI_API_KEY environment variable not set.");
-        }
-        const ai = new GoogleGenAI({ apiKey });
-
-        const systemInstruction = `You are a friendly and knowledgeable AI assistant for 'يسرها' software company. Your goal is to help customers with their service choices. Answer questions about features, prices, recommendations, and options based ONLY on the provided services data. Your answers must be in Arabic. Do not invent items. Be concise and helpful. Here is the services data in JSON format: ${JSON.stringify(SERVICES_DATA)}`;
-
-        chatRef.current = ai.chats.create({
-            model: 'gemini-2.5-flash',
-            config: {
-                systemInstruction,
-            },
-        });
-        setMessages([{
-            role: 'model',
-            text: 'أهلاً بك في شركة "يسرها"! كيف يمكنني مساعدتك في خدمات البرمجيات اليوم؟'
-        }]);
-    } catch (e) {
-        setError(e instanceof Error ? e.message : 'An unknown error occurred during initialization.');
-        console.error(e);
-    }
-  }, []);
-
-  useEffect(() => {
-    initializeChat();
-  }, [initializeChat]);
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading || !chatRef.current) return;
+    if (!input.trim() || isLoading) return;
 
     const userMessage: ChatMessage = { role: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
@@ -64,25 +32,29 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
     setError(null);
 
     try {
-      const stream = await chatRef.current.sendMessageStream({ message: input });
-      
       setMessages(prev => [...prev, { role: 'model', text: '' }]);
 
-      for await (const chunk of stream) {
-        const chunkText = chunk.text;
-        setMessages(prev => {
-          const lastMessage = prev[prev.length - 1];
-          if (lastMessage.role === 'model') {
-            return [...prev.slice(0, -1), { ...lastMessage, text: lastMessage.text + chunkText }];
-          }
-          return prev;
-        });
-      }
-    } catch (e) {
-      const errorMessage = e instanceof Error ? e.message : 'Sorry, something went wrong.';
+      const res = await fetch("/.netlify/functions/gemini-proxy", {
+        method: "POST",
+        body: JSON.stringify({ message: input, servicesData: SERVICES_DATA }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      const replyText = data.reply || data.error || "حدث خطأ";
+
+      setMessages(prev => {
+        const lastMessage = prev[prev.length - 1];
+        if (lastMessage.role === 'model') {
+          return [...prev.slice(0, -1), { ...lastMessage, text: replyText }];
+        }
+        return prev;
+      });
+
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'حدث خطأ';
       setError(errorMessage);
-      setMessages(prev => [...prev, { role: 'model', text: `عذرًا، حدث خطأ ما. ${errorMessage}` }]);
-      console.error(e);
+      setMessages(prev => [...prev, { role: 'model', text: `عذرًا، حدث خطأ: ${errorMessage}` }]);
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +66,7 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ onClose }) => {
         <header className="flex items-center justify-between p-4 border-b border-stone-200">
           <div className="flex items-center space-x-3 gap-2">
             <BotMessageSquare className="w-8 h-8 text-cyan-400" />
-            <h2 className="text-3xl text-teal-400 mr-2">المساعد الذكي </h2>
+            <h2 className="text-3xl text-teal-400 mr-2">المساعد الذكي</h2>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-slate-900 transition-colors" aria-label="Close modal">
             <X className="w-6 h-6" />
