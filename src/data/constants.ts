@@ -7,7 +7,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
     category: 'تطوير مواقع الويب',
     items: [
       {
-        name: 'موقع تعريفي (Landing / شركة)',
+        name: 'موقع تعريفي (شخصي / شركة)',
         description:
           'تصميم وتطوير موقع ويب احترافي لعرض نشاطك وخدماتك، مناسب للشركات والأفراد.',
         price: '6,000 – 8,000 EGP',

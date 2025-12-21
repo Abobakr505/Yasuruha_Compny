@@ -300,7 +300,7 @@ export default function About() {
           >
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/about.png"
+                src="/about.webp"
                 alt="فريق العمل"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />

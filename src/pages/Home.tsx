@@ -147,7 +147,7 @@ export default function Home() {
         .select('*')
         .eq('status', 'منشور')
         .order('created_at', { ascending: false })
-        .limit(4);
+        .limit(3);
       if (error) {
         console.error('Error fetching latest projects:', error);
         console.log('خطأ في جلب المشاريع: ' + error.message, 'error');
@@ -324,7 +324,7 @@ export default function Home() {
           </motion.div>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.img
-              src="/about.png"
+              src="/about.webp"
               alt="من نحن"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
