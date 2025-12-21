@@ -37,7 +37,7 @@ useDocumentTitle("يسِّرها - خدمات  ");
     {
       icon: Code,
       title: 'تطوير الويب',
-      description: 'تطبيقات React متقدمة',
+      description: 'تطبيقات ويب متقدمة',
       color: '#3b82f6',
       gradient: 'from-blue-500 to-cyan-500'
     },

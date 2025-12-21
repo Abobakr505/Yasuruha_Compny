@@ -138,6 +138,10 @@ export default function ProjectDetail() {
       </motion.div>
     );
   }
+  const tags = project.tags ?? [];
+const radius = 150;
+const angleStep = tags.length > 0 ? 360 / tags.length : 0;
+
 
   const IconComponent = iconMap[project.icon_name] || Code;
 
@@ -366,35 +370,42 @@ export default function ProjectDetail() {
                 التقنيات <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">المستخدمة</span>
               </h2>
             </motion.div>
-            <div className="relative max-w-4xl mx-auto">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                className="relative"
-              >
-                {project.tags.map((tag, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    style={{
-                      transform: `rotate(${index * 60}deg) translateY(-150px) rotate(${-index * 60}deg)`,
-                    }}
-                    className="absolute top-1/2 left-1/2 w-32 h-32"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.2 }}
-                      className="w-24 h-24 rounded-2xl bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm border border-white/20 flex flex-col items-center justify-center text-center p-3 shadow-2xl"
-                      style={{ backgroundColor: `${project.color}20` }}
-                    >
-                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center mb-2">
-                        <Code className="w-6 h-6 text-white" />
-                      </div>
-                      <span className="text-xs font-bold text-white">{tag}</span>
-                    </motion.div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
+<div className="relative max-w-4xl mx-auto">
+    <motion.div
+    animate={{ rotate: 360 }}
+    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+    className="relative"
+  >
+    {tags.map((tag, index) => (
+      <motion.div
+        key={index}
+        style={{
+          transform: `
+            rotate(${index * angleStep}deg)
+            translateY(-${radius}px)
+            rotate(${-index * angleStep}deg)
+          `,
+        }}
+        className="absolute top-1/2 left-1/2 w-32 h-32"
+      >
+        <motion.div
+          whileHover={{ scale: 1.15 }}
+          className="w-24 h-24 rounded-2xl
+                     bg-gradient-to-br from-emerald-500/10 to-cyan-500/10
+                     backdrop-blur-sm border border-emerald-500/30
+                     flex flex-col items-center justify-center
+                     text-center shadow-2xl"
+        >
+          <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center mb-2">
+            <Code className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xs font-bold text-white">{tag}</span>
+        </motion.div>
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
+
           </motion.section>
         )}
 
