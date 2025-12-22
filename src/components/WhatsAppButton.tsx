@@ -14,7 +14,7 @@ import AiAssistantModal from './AiAssistantModal';
 export function WhatsAppButton() {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const phoneNumber = "+20115818874";
+  const phoneNumber = "+201158188874";
   const message = encodeURIComponent("مرحبا، أود الاستفسار عن خدماتكم."); // يمكنك تغيير الرسالة الافتراضية
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
