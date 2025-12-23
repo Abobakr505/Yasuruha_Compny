@@ -1,6 +1,6 @@
 import { ServiceCategory } from '../lib/types';
 
-export const WHATSAPP_NUMBER = "+201XXXXXXXXX"; // رقمك الحقيقي
+export const WHATSAPP_NUMBER = "+201158188874"; // رقمك الحقيقي
 
 export const SERVICES_DATA: ServiceCategory[] = [
   {

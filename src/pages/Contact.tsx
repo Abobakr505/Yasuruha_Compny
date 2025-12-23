@@ -104,7 +104,7 @@ export default function Contact() {
     { icon: Mail, title: 'البريد الإلكتروني', value: 'yasuruha1@gmail.com', link: 'mailto:yasuruha1@gmail.com', color: '#3b82f6' },
     { icon: Phone, title: 'الهاتف', value: '+20115818874', link: 'tel:+20115818874', color: '#10b981' },
     { icon: MapPin, title: 'الموقع', value: 'سوهاج , مصر ', link: '#', color: '#8b5cf6' },
-    { icon: Clock, title: 'ساعات العمل', value: '9AM - 6PM', link: '#', color: '#f97316' }
+    { icon: Clock, title: 'ساعات العمل', value: ' من الساعة 6 صباحا الي الساعة 9 مساءا ', link: '#', color: '#f97316' }
   ];
   const subjects = [
     { value: 'web', label: 'تطوير الويب', icon: '🌐', color: '#3b82f6' },
@@ -469,7 +469,7 @@ export default function Contact() {
             ))}
           </motion.div>
         </motion.section>
-        <motion.div variants={itemVariants} className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+        {/* <motion.div variants={itemVariants} className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.6847798424!2d46.7285!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQyJzQ5LjAiTiA0NsKwNDMnNDIuNiJF!5e0!3m2!1sar!2ssa!4v1234567890"
             width="100%"
@@ -480,7 +480,7 @@ export default function Contact() {
             referrerPolicy="no-referrer-when-downgrade"
             title="موقعنا"
           />
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );
