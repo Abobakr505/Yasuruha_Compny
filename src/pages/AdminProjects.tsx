@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Plus, Edit, Trash2, Eye, Download, X, Check, Star, Info, MessageSquare } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Download, X, Check, Star, Info, MessageSquare  } from 'lucide-react';
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -911,7 +911,7 @@ export default function AdminProjects() {
                     value={formData.icon_name}
                     onChange={(e) => setFormData({ ...formData, icon_name: e.target.value })}
                   >
-                    {['Code', 'ShoppingCart', 'Heart', 'Building2', 'Smartphone', 'Globe' , 'User'].map((icon) => (
+                    {['Code', 'ShoppingCart', 'Heart', 'Building2', 'Smartphone', 'Globe' , 'UserCircle'].map((icon) => (
                       <option key={icon} value={icon}>{icon}</option>
                     ))}
                   </select>
