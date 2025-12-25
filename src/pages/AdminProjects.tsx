@@ -911,7 +911,9 @@ export default function AdminProjects() {
                     value={formData.icon_name}
                     onChange={(e) => setFormData({ ...formData, icon_name: e.target.value })}
                   >
+
                     {['Code', 'ShoppingCart', 'Heart', 'Building2', 'Smartphone', 'Globe' , 'CircleUserRound' , 'User' , 'Hamburger' , 'BriefcaseBusiness'].map((icon) => (
+      
                       <option key={icon} value={icon}>{icon}</option>
                     ))}
                   </select>
