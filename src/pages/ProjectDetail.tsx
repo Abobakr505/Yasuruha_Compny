@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, Sparkles, ChevronRight, Eye, BookOpen, Calendar, Clock, Users, Star } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, ShoppingCart, Heart, Building2, CircleUserRound , Hamburger ,  BriefcaseBusiness , Sparkles, ChevronRight, Eye, BookOpen, Calendar, Clock, Users, Star } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
@@ -12,6 +12,9 @@ const iconMap = {
   Code,
   Smartphone,
   Globe,
+  CircleUserRound,
+   Hamburger ,
+     BriefcaseBusiness
 };
 
 // قاموس لترجمة مفاتيح الإحصائيات إلى العربية
@@ -260,7 +263,7 @@ const angleStep = tags.length > 0 ? 360 / tags.length : 0;
 
         <div className="flex-1">
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{project.category}</h3>
-          <p className="text-gray-300 leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
+          <p className="text-white leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
 
           {project.tags?.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">

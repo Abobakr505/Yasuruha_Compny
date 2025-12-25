@@ -912,7 +912,7 @@ export default function AdminProjects() {
                     onChange={(e) => setFormData({ ...formData, icon_name: e.target.value })}
                   >
 
-                    {['Code', 'ShoppingCart', 'Heart', 'Building2', 'Smartphone', 'Globe' , 'CircleUserRound' , 'User' , 'Hamburger' , 'BriefcaseBusiness'].map((icon) => (
+                    {['Code', 'ShoppingCart', 'Heart', 'Building2', 'Smartphone', 'Globe' , 'CircleUserRound'  , 'Hamburger' , 'BriefcaseBusiness'].map((icon) => (
       
                       <option key={icon} value={icon}>{icon}</option>
                     ))}

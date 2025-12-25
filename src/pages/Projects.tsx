@@ -19,6 +19,9 @@ import {
   CheckCircle,
   Rocket,
   Filter,
+  CircleUserRound,
+  Hamburger,
+  BriefcaseBusiness,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -33,6 +36,9 @@ const iconMap = {
   Code,
   Smartphone,
   Globe,
+    CircleUserRound,
+   Hamburger ,
+     BriefcaseBusiness
 };
 
 export default function Projects() {
