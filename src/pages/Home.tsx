@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter, Settings } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter, Settings, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
@@ -40,9 +40,9 @@ export default function Home() {
       gradient: 'from-cyan-400 via-blue-400 to-emerald-400',
     },
     {
-      icon: Globe,
-      title: 'حلول السحابة',
-      description: 'بنية تحتية سحابية آمنة وقابلة للتوسع مع أفضل الممارسات',
+      icon: ShoppingCart,
+      title: 'المتاجر الإلكترونية',
+      description: 'بأفضل الطرق لتوسيع نشاطك الرقمي وزيادة مبيعاتك ',
       gradient: 'from-teal-400 via-emerald-400 to-green-400',
     },
     {
@@ -180,7 +180,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-cyan-500/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.1),transparent_50%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:pt-6 pb-[6rem] lg:py-8 relative z-10 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4  sm:pt-6 pb-[6rem] lg:py-8 lg:pb-[4rem] relative z-10 ">
           <div className="grid lg:grid-cols-2 gap-12 items-center ">
             <div className="text-center lg:text-right">
               <motion.div
@@ -198,7 +198,7 @@ export default function Home() {
                     ],
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="inline-block mb-6 rounded-full"
+                  className="inline-block mb-2 rounded-full"
                 >
                   <span className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium ">
                     <Sparkles className="w-4 h-4" />
@@ -246,19 +246,20 @@ export default function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-full font-bold text-lg flex items-center gap-2 justify-center shadow-lg shadow-emerald-500/30"
+                    className="group px-8 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-full font-bold text-lg flex items-center gap-2 justify-center shadow-lg shadow-emerald-500/30"
                   >
                     ابدأ رحلتك معنا
                     <ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                   </motion.button>
                 </Link>
-                <Link to="/projects">
+                <Link to="/projects" className='flex justify-center'>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 border-2 border-emerald-400/50 text-white rounded-full font-bold text-lg hover:bg-emerald-500/10 transition-colors"
+                    className="group px-8 py-3 border-2 border-emerald-400/50 text-white flex items-center gap-2 justify-center rounded-full font-bold text-lg hover:bg-emerald-500/10 transition-colors"
                   >
-                    استكشف إبداعنا
+                    استكشف إبداعنا 
+                    <Sparkles className="group-hover:-translate-x-1 transition-transform" />
                   </motion.button>
                 </Link>
               </motion.div>
@@ -266,9 +267,9 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1 }}
-                className="mt-12 text-emerald-400"
+                className="mt-12 text-teal-400"
               >
-                <p className="text-sm mb-2 font-bold">الثقة والتميز في كل مشروع</p>
+                <p className="text-md mb-2 ">الثقة والتميز في كل مشروع</p>
                 <div className="flex justify-center lg:justify-start gap-1">
                   {[...Array(5)].map((_, i) => (
                     <motion.span
@@ -290,7 +291,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <a href="#about" >
+        <a href="#about" className='z-50'>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -422,7 +423,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              لماذا <span className="LAXR text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">يسرها</span>؟
+              لماذا <span className="LAXR text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 p-1 ">يسرها</span>؟
             </h2>
             <p className="text-xl text-gray-400">نقدم حلولاً متكاملة تلبي احتياجاتك بأعلى معايير الجودة</p>
           </motion.div>

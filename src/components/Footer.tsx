@@ -91,6 +91,13 @@ export default function Footer() {
                 className="hover:text-white transition-colors cursor-pointer"
               >
                 {" "}
+                 الرئيسية{" "}
+              </Link>
+              <Link
+                to="/about"
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                {" "}
                 من نحن{" "}
               </Link>
               <Link
@@ -106,10 +113,10 @@ export default function Footer() {
                 المشاريع
               </Link>
               <Link
-                to="contact"
+                to="/contact"
                 className="hover:text-white transition-colors cursor-pointer"
               >
-                اتصل بنا
+               تواصل معنا
               </Link>
             </div>
           </motion.div>
