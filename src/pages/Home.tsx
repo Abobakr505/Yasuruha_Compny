@@ -291,7 +291,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <a href="#about" className='z-50'>
+        <a href="#about" className='z-10'>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
