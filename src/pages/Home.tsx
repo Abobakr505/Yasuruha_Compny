@@ -359,7 +359,7 @@ export default function Home() {
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
   transition={{ delay: 0.1 }}
-  className="flex items-start gap-4"
+  className="flex items-start gap-2"
 >
   <CheckCircle className="w-5 h-5 text-emerald-400 mt-1 flex-shrink-0" />
   <p className="text-gray-300">
@@ -372,7 +372,7 @@ export default function Home() {
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
   transition={{ delay: 0.2 }}
-  className="flex items-start gap-4"
+  className="flex items-start gap-2"
 >
   <CheckCircle className="w-5 h-5 text-cyan-400 mt-1 flex-shrink-0" />
   <p className="text-gray-300">
@@ -385,9 +385,9 @@ export default function Home() {
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
   transition={{ delay: 0.3 }}
-  className="flex items-start gap-4"
+  className="flex items-start gap-2"
 >
-  <CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
+  <CheckCircle className="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" />
   <p className="text-gray-300">
     شراكة طويلة الأمد قائمة على الثقة والدعم المستمر.
   </p>

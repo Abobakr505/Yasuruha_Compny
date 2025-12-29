@@ -62,7 +62,7 @@ export default function About() {
   }, [contentInView, imageInView, contentControls, imageControls]);
   // Achievements data
   const achievements = [
-    'خبرة تزيد عن 10 سنوات في التصميم الإبداعي',
+    'خبرة تزيد عن 2 سنوات في التصميم الإبداعي',
     'إتمام 100+ مشروع بنجاح عالمي',
     'حائزون على جوائز دولية للابتكار',
     'فريق متخصص يحول الأحلام إلى واقع',
@@ -145,10 +145,9 @@ export default function About() {
   ];
 
   const journey = [
-    { year: '2018', event: 'التأسيس', desc: '3 أعضاء بحلم كبير', color: '#10b981', icon: Rocket },
-    { year: '2020', event: '100 مشروع', desc: 'نمو سريع', color: '#06b6d4', icon: UsersIcon },
-    { year: '2022', event: 'جوائز عالمية', desc: 'التميز الدولي', color: '#f59e0b', icon: Trophy },
-    { year: '2024', event: '500+ عميل', desc: 'توسع إقليمي', color: '#8b5cf6', icon: Globe },
+    { year: '2024', event: 'التأسيس', desc: ' مبرمج بحلم كبير', color: '#10b981', icon: Rocket },
+    { year: '2025', event: '100 مشروع', desc: 'نمو سريع', color: '#06b6d4', icon: UsersIcon },
+    { year: '2026', event: '100+ عميل', desc: 'توسع رائع ', color: '#8b5cf6', icon: Globe },
   ];
 
   const values = [
@@ -272,7 +271,7 @@ export default function About() {
             </p>
             <div className="space-y-3 mb-6">
               {achievements.map((achievement, index) => (
-                <div key={index} className="flex items-start space-x-3">
+                <div key={index} className="flex items-start space-x-3 gap-2">
                   <CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" />
                   <span className="text-gray-300 text-sm">{achievement}</span>
                 </div>
@@ -312,7 +311,7 @@ export default function About() {
             ></div>
             {/* Floating stats */}
             <div className="absolute top-8 left-8 glass-effect rounded-2xl p-4 shadow-xl">
-              <div className="text-2xl font-bold bg-cyan-400 bg-clip-text text-transparent">700+</div>
+              <div className="text-2xl font-bold bg-cyan-400 bg-clip-text text-transparent">100+</div>
               <div className="text-sm text-white ">مشروع</div>
             </div>
 

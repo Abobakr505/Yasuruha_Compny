@@ -36,15 +36,17 @@ const iconMap = {
   Code,
   Smartphone,
   Globe,
-    CircleUserRound,
-   Hamburger ,
-     BriefcaseBusiness
+  CircleUserRound,
+  Hamburger,
+  BriefcaseBusiness,
 };
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -106,29 +108,59 @@ export default function Projects() {
     },
   ];
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('status', 'منشور'); // Only fetch published projects
-      if (error) {
-        console.error('Error fetching projects:', error);
-        console.log('خطأ في جلب المشاريع: ' + error.message, 'error');
-      } else {
-        console.log('Fetched projects:', data); // Debug log
-        setProjects(data);
-        if (data.length === 0) {
-          console.log('لا توجد مشاريع منشورة متاحة', 'info');
-        }
+  const fetchCategories = async () => {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('category')
+      .eq('status', 'منشور');
+    if (error) {
+      console.error('Error fetching categories:', error);
+      return;
+    }
+    const categoryMap = new Map();
+    data.forEach((item) => {
+      const norm = item.category.toLowerCase().trim();
+      if (!categoryMap.has(norm)) {
+        categoryMap.set(norm, item.category);
       }
-      setLoading(false);
-    };
-   
-    fetchProjects();
+    });
+    setCategories(['all', ...Array.from(categoryMap.values())]);
+  };
+
+  const fetchProjects = async (cat) => {
+    setLoading(true);
+    let query = supabase
+      .from('projects')
+      .select('*')
+      .eq('status', 'منشور');
+    if (cat !== 'all') {
+      query = query.ilike('category', cat);
+    }
+    const { data, error } = await query;
+    if (error) {
+      console.error('Error fetching projects:', error);
+      console.log('خطأ في جلب المشاريع: ' + error.message, 'error');
+    } else {
+      console.log('Fetched projects:', data); // Debug log
+      setProjects(data);
+      if (data.length === 0) {
+        console.log('لا توجد مشاريع منشورة متاحة', 'info');
+      }
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCategories();
   }, []);
- useDocumentTitle('يسِّرها - المشاريع');
+
+  useEffect(() => {
+    if (selectedCategory) {
+      fetchProjects(selectedCategory);
+    }
+  }, [selectedCategory]);
+
+  useDocumentTitle('يسِّرها - المشاريع');
   // const showNotification = (message, type) => {
   //   setNotification({ message, type });
   //   setTimeout(() => setNotification(null), 5000);
@@ -293,36 +325,33 @@ export default function Projects() {
           </div>
         </motion.section>
 
-       
-
         {/* Projects Carousel */}
-        
-          <motion.section
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-24"
-          >
-            <motion.div variants={itemVariants} className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
-                عالم{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                  مشاريعنا
-                </span>
-              </h2>
-            </motion.div>
-             {/* Loading State */}
-        {loading && (
-          <motion.div
-            variants={itemVariants}
-            className="text-center flex flex-col items-center gap-2 text-white text-xl my-16"
-          >
-            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-            جاري التحميل...
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="mb-24"
+        >
+          <motion.div variants={itemVariants} className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
+              عالم{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                مشاريعنا
+              </span>
+            </h2>
           </motion.div>
-        )}
-{!loading && projects.length > 0 && (
+          {/* Loading State */}
+          {loading && (
+            <motion.div
+              variants={itemVariants}
+              className="text-center flex flex-col items-center gap-2 text-white text-xl my-16"
+            >
+              <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              جاري التحميل...
+            </motion.div>
+          )}
+          {!loading && projects.length > 0 && (
             <div className="relative max-w-6xl mx-auto">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -363,9 +392,51 @@ export default function Projects() {
                 })}
               </motion.div>
             </div>
-            )}
+          )}
+        </motion.section>
+
+        {/* Categories Filter - عرض الفئات بشكل رائع مع أنيميشن ذكي */}
+                  {loading && (
+            <motion.div
+              variants={itemVariants}
+              className="text-center flex flex-col items-center gap-2 text-white text-xl my-16"
+            >
+              <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              جاري التحميل...
+            </motion.div>
+          )}
+        {!loading && categories.length > 0 && (
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <motion.div variants={itemVariants} className="flex justify-center flex-wrap gap-4">
+              {categories.map((category, index) => (
+                <motion.button
+                  key={category}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(16,185,129,0.5)' }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-3 rounded-full font-semibold text-sm transition-all ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg'
+                      : 'bg-white/10 text-gray-300 border border-white/20'
+                  }`}
+                  animate={{
+                    y: selectedCategory === category ? -5 : 0,
+                    transition: { duration: 0.3 },
+                  }}
+                >
+                  {category === 'all' ? 'جميع الفئات' : category}
+                </motion.button>
+              ))}
+            </motion.div>
           </motion.section>
-        
+        )}
 
         {/* Projects Grid */}
         {!loading && projects.length > 0 && (
@@ -458,8 +529,16 @@ export default function Projects() {
           </motion.section>
         )}
 
+        {/* Empty State for Filtered Projects */}
+        {!loading && projects.length === 0 && selectedCategory !== 'all' && (
+          <motion.div variants={itemVariants} className="text-center text-white text-xl my-16">
+            <Filter className="mx-auto text-gray-400 mb-4" size={56} />
+            لا توجد مشاريع في هذه الفئة
+          </motion.div>
+        )}
+
         {/* Empty State */}
-        {!loading && projects.length === 0 && (
+        {!loading && projects.length === 0 && selectedCategory === 'all' && (
           <motion.div variants={itemVariants} className="text-center text-white text-xl my-16">
             <Filter className="mx-auto text-gray-400 mb-4" size={56} />
             لا توجد مشاريع منشورة متاحة
