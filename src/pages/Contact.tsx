@@ -419,7 +419,7 @@ export default function Contact() {
             </motion.div>
           </div>
         </motion.section>
-        <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-24">
+        <motion.section variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center">
           <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
             <motion.div
               animate={{ scale: [1, 1.05, 1] }}

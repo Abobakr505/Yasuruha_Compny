@@ -421,7 +421,7 @@ export default function Projects() {
                   whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(16,185,129,0.5)' }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-3 rounded-full font-semibold text-sm transition-all ${
+                  className={`px-6 py-3 rounded-full font-semibold text-sm transition-all z-10  ${
                     selectedCategory === category
                       ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg'
                       : 'bg-white/10 text-gray-300 border border-white/20'
@@ -598,8 +598,8 @@ export default function Projects() {
             className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto"
           >
             {[
-              { icon: Users, text: '500+ عميل', color: '#10b981' },
-              { icon: TrendingUp, text: '95% نجاح', color: '#06b6d4' },
+              { icon: Users, text: '100+ عميل', color: '#10b981' },
+              { icon: TrendingUp, text: '99% نجاح', color: '#06b6d4' },
               { icon: Award, text: 'جوائز دولية', color: '#f59e0b' },
             ].map((item, index) => (
               <motion.div
