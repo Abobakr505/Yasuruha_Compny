@@ -600,7 +600,7 @@ export default function Projects() {
             {[
               { icon: Users, text: '100+ عميل', color: '#10b981' },
               { icon: TrendingUp, text: '99% نجاح', color: '#06b6d4' },
-              { icon: Award, text: 'جوائز دولية', color: '#f59e0b' },
+              { icon: Award, text: ' رضا العملاء 99%', color: '#f59e0b' },
             ].map((item, index) => (
               <motion.div
                 variants={itemVariants}
