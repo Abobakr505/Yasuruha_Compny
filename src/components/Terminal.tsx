@@ -5,11 +5,11 @@ export default function Terminal() {
   const [currentLine, setCurrentLine] = useState(0);
 
   const lines = [
-    { text: '$ npm install @yusraha/innovation', delay: 0 },
+    { text: '$ npm install @yasuruha/innovation', delay: 0 },
     { text: 'Installing smart solutions...', delay: 0.8, color: 'text-emerald-400' },
     { text: 'Configuring excellence...', delay: 1.6, color: 'text-cyan-400' },
     { text: 'Building your digital future...', delay: 2.4, color: 'text-teal-400' },
-    { text: '$ yusraha deploy --production', delay: 3.2 },
+    { text: '$ yasuruha deploy --production', delay: 3.2 },
     { text: '✓ Your digital future is ready!', delay: 4, color: 'text-emerald-400' },
     { text: 'Success rate: 100%', delay: 4.8, color: 'text-emerald-400' },
     { text: '█', delay: 5.6, color: 'text-white', isCursor: true },
