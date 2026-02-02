@@ -48,7 +48,7 @@ export default function Terminal() {
             />
           </div>
           <div className="flex-1 text-center">
-            <span className="text-sm text-gray-400 font-mono">yusraha-terminal</span>
+            <span className="text-sm text-gray-400 font-mono">yasuruha-terminal</span>
           </div>
         </div>
 
