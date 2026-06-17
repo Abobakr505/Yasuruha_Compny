@@ -213,75 +213,98 @@ const angleStep = tags.length > 0 ? 360 / tags.length : 0;
           </motion.p>
         </motion.div>
 
-        <motion.section
+<motion.section
   variants={containerVariants}
   initial="hidden"
   whileInView="visible"
   viewport={{ once: true }}
-  className="mb-24"
+  className="mb-32"
 >
-  <div className="grid lg:grid-cols-2 gap-12 items-center">
+  <div className="grid lg:grid-cols-2 gap-16 items-center">
 
     {/* Hero Image Card */}
-    <motion.div variants={itemVariants} className="relative group rounded-3xl overflow-hidden border-2 border-white/20 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-      <div className={`relative rounded-3xl overflow-hidden ${project.gradient} bg-gradient-to-br`}>
+    <motion.div
+      variants={itemVariants}
+      className="relative group"
+    >
+      {/* Glow ring behind image */}
+      <div className={`absolute -inset-1 bg-gradient-to-br ${project.gradient} rounded-3xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500`} />
+
+      <div className="relative rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm">
         <img
           src={project.image || 'https://via.placeholder.com/800x600'}
           alt={project.title}
-          className="w-full h-96 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-[420px] object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl z-10 pointer-events-none" />
-        <div className="absolute bottom-4 left-4 right-4 opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 z-20 pointer-events-none">
-          <h3 className="LAXR text-2xl sm:text-3xl font-bold text-white mb-2">{project.title}</h3>
-          <div className="flex items-center gap-3">
-            {/* أيقونة داخل دائرة */}
-            <div className={`w-8 h-8 bg-gradient-to-r ${project.gradient} rounded-full flex items-center justify-center shadow-md`}>
-              <Eye className="w-5 h-5 text-white" />
+
+        {/* Bottom overlay — always visible, subtle */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        {/* Bottom content */}
+        <div className="absolute bottom-0 left-0 right-0 p-6">
+          <h3 className="LAXR text-3xl font-bold text-white mb-3 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+            {project.title}
+          </h3>
+
+          <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-75">
+            <div className={`w-9 h-9 bg-gradient-to-br ${project.gradient} rounded-full flex items-center justify-center`}>
+              <Eye className="w-4 h-4 text-white" />
             </div>
-            {/* النص مع gradient */}
-            <span className={`GraphicSchool bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent text-lg sm:text-xl font-semibold`}>
+            <span className={`GraphicSchool text-lg font-semibold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
               متع نظرك
             </span>
           </div>
         </div>
+
+        {/* Corner badge */}
+        <div className={`absolute top-4 right-4 px-3 py-1.5 bg-gradient-to-r ${project.gradient} rounded-full text-white text-xs font-bold tracking-wide shadow-lg`}>
+          {project.category}
+        </div>
       </div>
     </motion.div>
 
-    {/* Main Info Card */}
-    <motion.div variants={itemVariants} className="space-y-6">
+    {/* Main Info */}
+    <motion.div variants={itemVariants} className="space-y-5">
 
-      {/* Project Card */}
-      <motion.div
-        className={`p-6 rounded-2xl border border-white/10 ${project.gradient} bg-gradient-to-br flex flex-col sm:flex-row gap-4 sm:gap-6 items-start shadow-md hover:scale-105 transition-transform duration-300`}
-      >
-        <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-lg bg-white/10 flex items-center justify-center shadow-sm">
-            <IconComponent className="w-8 h-8 text-white" />
+      {/* Project Header Card */}
+      <div className={`relative overflow-hidden p-6 rounded-2xl bg-gradient-to-br ${project.gradient}`}>
+        {/* Subtle grid texture */}
+        <div className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+            backgroundSize: '24px 24px'
+          }}
+        />
+
+        <div className="relative flex gap-5 items-start">
+          <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+            <IconComponent className="w-7 h-7 text-white" />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <p className="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">المشروع</p>
+            <h3 className="text-2xl font-bold text-white mb-2 leading-snug">{project.category}</h3>
+            <p className="text-white/80 text-sm leading-relaxed">{project.long_description || 'لا يوجد وصف متاح'}</p>
+
+            {project.tags?.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.tags.map((tag: string, i: number) => (
+                  <span
+                    key={i}
+                    className="text-xs font-medium text-white bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-
-        <div className="flex-1">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{project.category}</h3>
-          <p className="text-white leading-relaxed">{project.long_description || 'لا يوجد وصف طويل متاح'}</p>
-
-          {project.tags?.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.tags.map((tag: string, i: number) => (
-                <span
-                  key={i}
-                  className="text-xs font-semibold text-white/90 bg-white/5 px-3 py-1 rounded-full border border-white/10"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </motion.div>
+      </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {project.stats &&
           Object.entries(project.stats).map(([key, value]) => {
             const StatIcon = statsIconMap[key] || Star;
@@ -289,33 +312,43 @@ const angleStep = tags.length > 0 ? 360 / tags.length : 0;
               <motion.div
                 key={key}
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="group p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center flex flex-col items-center justify-center shadow-md transition-transform duration-300"
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="group relative p-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl text-center flex flex-col items-center justify-center transition-all duration-300 cursor-default overflow-hidden"
               >
-                <div className={`w-10 h-10 mb-3 rounded-full ${project.gradient} bg-gradient-to-br flex items-center justify-center shadow-sm`}>
-                  <StatIcon className="w-5 h-5 text-white" />
+                {/* Subtle gradient on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`} />
+
+                <div className={`relative w-9 h-9 mb-2 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
+                  <StatIcon className="w-4 h-4 text-white" />
                 </div>
-                <div className={`text-2xl sm:text-3xl font-bold ${project.gradient} bg-gradient-to-br bg-clip-text text-transparent mb-1`}>
+                <div className={`relative text-2xl font-bold bg-gradient-to-br ${project.gradient} bg-clip-text text-transparent`}>
                   {value || '—'}
                 </div>
-                <div className="text-gray-400 text-sm">{statsTranslation[key] || key}</div>
+                <div className="relative text-gray-400 text-xs mt-0.5">
+                  {statsTranslation[key] || key}
+                </div>
               </motion.div>
             );
           })}
       </div>
 
+      {/* Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 pt-4">
+      <div className="flex flex-col sm:flex-row gap-3">
         {project.live_url && (
           <motion.a
             href={safeLiveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            className={`flex-1 px-6 py-4 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg transition-transform duration-300`}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className={`flex-1 relative overflow-hidden px-6 py-3.5 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg group`}
           >
-            <Globe className="w-5 h-5" />
-            عرض الموقع
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+            <Globe className="w-4 h-4 relative" />
+            <span className="relative">عرض الموقع</span>
           </motion.a>
         )}
         {project.case_study_url && (
@@ -323,11 +356,12 @@ const angleStep = tags.length > 0 ? 360 / tags.length : 0;
             href={safeCaseStudyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            className="px-6 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-md transition-transform duration-300"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="relative overflow-hidden px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300"
           >
-            <BookOpen className="w-5 h-5" />
-           قصّة المشروع
+            <BookOpen className="w-4 h-4" />
+            قصّة المشروع
           </motion.a>
         )}
       </div>

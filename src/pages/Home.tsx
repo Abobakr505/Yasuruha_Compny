@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter, Settings, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Code, Smartphone, Globe, Zap, Shield, Users, ChevronDown, Sparkles, Rocket, Target, Award, Database, Cloud, Lock, Palette, X, Star, CheckCircle, Filter, Settings, ShoppingCart, SquareArrowOutUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Terminal from '../components/Terminal';
 import StarField from '../components/StarField';
@@ -635,9 +635,12 @@ export default function Home() {
                     <div className="p-6">
                       <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
                       <p className="text-gray-400 mb-4">{project.description}</p>
+                      <div className='flex  justify-between items-center '>
                       <span className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-400/50 rounded-full text-emerald-400 text-sm font-medium">
                         {project.category}
                       </span>
+                      <SquareArrowOutUpRight className="group w-5 h-5 text-emerald-400/20 group-hover:text-emerald-400 inline-block mr-2 transition-all" />
+                      </div>
                     </div>
                   </motion.div>
                 </Link>
